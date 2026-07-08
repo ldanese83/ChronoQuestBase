@@ -1,0 +1,506 @@
+#story {
+}
+
+#story img {
+  float: left;
+  width: 12vw;
+  margin-right: 20px;
+  margin-bottom: 6px;
+  border-radius: 5px;
+  box-shadow: -2px 2px 8px 5px #12aa33;
+  border: 2px solid green;
+}
+
+.materiale {
+  font-weight: bold;
+  color: black;
+}
+.materiale:hover {
+  font-weight: bold;
+  color: #e25622;
+}
+.materiale:visited {
+  font-weight: bold;
+  color: black;
+}
+
+/* Stile WordArt per un numero */
+.number-wordart-voto-positivo {
+  font-size: 6vh; /* Dimensione grande per il numero */
+  font-weight: bold; /* Grassetto per enfatizzare */
+  color: #ffffff; /* Colore di base */
+  background: linear-gradient(
+    45deg,
+    #34ab54,
+    #34ef54
+  ); /* Gradiente colorato blu */
+  -webkit-background-clip: text; /* Clip il gradiente al testo */
+  -webkit-text-fill-color: transparent; /* Rendi il riempimento del testo trasparente */
+  text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    /* Ombra leggera */ 4px 4px 8px rgba(0, 0, 0, 0.2); /* Effetto 3D */
+  transform: rotate(-5deg); /* Rotazione leggera per un tocco stiloso */
+  text-align: center; /* Centrare il testo */
+}
+/* Stile WordArt per un numero */
+.number-wordart-voto-medio {
+  font-size: 6vh; /* Dimensione grande per il numero */
+  font-weight: bold; /* Grassetto per enfatizzare */
+  color: #ffffff; /* Colore di base */
+  background: linear-gradient(
+    45deg,
+    #ebd91c,
+    #e6d200
+  ); /* Gradiente colorato blu */
+  -webkit-background-clip: text; /* Clip il gradiente al testo */
+  -webkit-text-fill-color: transparent; /* Rendi il riempimento del testo trasparente */
+  text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    /* Ombra leggera */ 4px 4px 8px rgba(0, 0, 0, 0.2); /* Effetto 3D */
+  transform: rotate(-5deg); /* Rotazione leggera per un tocco stiloso */
+  text-align: center; /* Centrare il testo */
+}
+/* Stile WordArt per un numero */
+.number-wordart-voto-negativo {
+  font-size: 6vh; /* Dimensione grande per il numero */
+  font-weight: bold; /* Grassetto per enfatizzare */
+  color: #ffffff; /* Colore di base */
+  background: linear-gradient(
+    45deg,
+    #d42417,
+    #c41104
+  ); /* Gradiente colorato blu */
+  -webkit-background-clip: text; /* Clip il gradiente al testo */
+  -webkit-text-fill-color: transparent; /* Rendi il riempimento del testo trasparente */
+  text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    /* Ombra leggera */ 4px 4px 8px rgba(0, 0, 0, 0.2); /* Effetto 3D */
+  transform: rotate(-5deg); /* Rotazione leggera per un tocco stiloso */
+  text-align: center; /* Centrare il testo */
+}
+
+/* Stile WordArt per un numero */
+.number-wordart {
+  font-size: 72px; /* Dimensione grande per il numero */
+  font-weight: bold; /* Grassetto per enfatizzare */
+  color: #ffffff; /* Colore di base */
+  background: linear-gradient(
+    45deg,
+    #6ecaff,
+    #738ef5
+  ); /* Gradiente colorato blu */
+  -webkit-background-clip: text; /* Clip il gradiente al testo */
+  -webkit-text-fill-color: transparent; /* Rendi il riempimento del testo trasparente */
+  text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    /* Ombra leggera */ 4px 4px 8px rgba(0, 0, 0, 0.2); /* Effetto 3D */
+  transform: rotate(-5deg); /* Rotazione leggera per un tocco stiloso */
+  text-align: center; /* Centrare il testo */
+}
+
+/* Opzione per aggiungere un bordo animato */
+.number-wordart:hover {
+  animation: glow 1s infinite alternate; /* Animazione al passaggio del mouse */
+}
+
+@keyframes glow {
+  0% {
+    text-shadow:
+      2px 2px 4px rgba(0, 0, 0, 0.3),
+      4px 4px 8px rgba(0, 0, 0, 0.2),
+      0 0 10px #6ecaff,
+      0 0 20px #738ef5;
+  }
+  100% {
+    text-shadow:
+      2px 2px 4px rgba(0, 0, 0, 0.3),
+      4px 4px 8px rgba(0, 0, 0, 0.2),
+      0 0 20px #6ecaff,
+      0 0 30px #738ef5;
+  }
+}
+
+/* Stile per l'area di drop */
+#dropzoneArea {
+  width: 100%;
+  cursor: pointer;
+  height: 200px;
+  margin: 20px auto;
+  background-color: #e0f7fa; /* Sfondo azzurro */
+  border: 2px dashed #00acc1; /* Bordi tratteggiati */
+  border-radius: 15px; /* Bordi arrotondati */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black; /* Testo verde scuro */
+  font-family: Arial, sans-serif;
+  text-align: center;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s; /* Effetti di transizione */
+}
+
+/* Stile quando un file viene trascinato sopra l'area */
+#dropzoneArea.dz-drag-hover {
+  background-color: #b2ebf2; /* Cambia sfondo */
+  border-color: #00838f; /* Cambia colore del bordo */
+}
+
+/* Stile dei link per rimuovere i file */
+.dz-remove {
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.dz-remove:hover {
+  color: black;
+}
+
+/* RICOMPENSE */
+.reward-bar {
+  text-align: center;
+}
+
+.reward-card .icon {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.reward-card .reward-value {
+  font-size: 2rem;
+}
+
+.reward-card .reward-label {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  letter-spacing: 1px;
+}
+
+.reward-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  padding: 28px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.25),
+    inset 0 0 25px rgba(255, 255, 255, 0.12);
+}
+.reward-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(255, 215, 64, 0.45);
+  transition: all 0.25s ease;
+}
+
+/* overlay di leggibilità */
+.reward-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+
+/* immagine fantasy */
+.reward-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  z-index: 0;
+}
+
+/* contenuto sopra */
+.reward-card * {
+  position: relative;
+  z-index: 2;
+}
+
+.reward-card.xp {
+  background: linear-gradient(135deg, #42a5f5, #1e88e5);
+}
+
+.reward-card.xp::before {
+  background-image: url("/assets/images/bg-xp-magic.png");
+}
+
+.reward-card.coins {
+  background: linear-gradient(135deg, #ffd54f, #ffb300);
+  color: #4e342e;
+}
+
+.reward-card.coins::after {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.reward-card.coins::before {
+  background-image: url("/assets/images/bg-coins-gold.png");
+}
+
+/* STORIA */
+.story-box {
+  background: #fdf6e3;
+}
+
+.story-content {
+  line-height: 1.6;
+}
+
+/* immagini nella storia */
+#story img {
+  float: left;
+  max-width: 180px;
+  margin: 0 20px 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/*parte finale con esercizio vero e proprio e valutazione finale*/
+/* ===========================
+   SEZIONE ESERCIZI / QUIZ
+=========================== */
+
+.quiz-domanda {
+  background: #fffdf5;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  border-left: 6px solid #c0a060;
+}
+
+/* TESTO DOMANDA */
+.quiz-testo {
+  background: #f8f1dc !important;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ===========================
+   RISPOSTE MULTIPLE
+=========================== */
+
+.quiz-risposta {
+  transition: all 0.2s ease;
+}
+
+.quiz-risposta-clickable,
+.quiz-risposta-clickable .input-group-text,
+.quiz-risposta-clickable input {
+  cursor: pointer;
+}
+
+.quiz-risposta:hover {
+  transform: translateX(6px);
+}
+
+.quiz-risposta .input-group-text {
+  background: #ede7d0;
+  border: none;
+  font-size: 1.2rem;
+  color: #5d4037;
+}
+
+.quiz-risposta input {
+  border: none;
+  background: #fdfaf0;
+  font-weight: 600;
+}
+
+/* selezionata */
+.quiz-risposta input[style*="background-color"] {
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+/* ===========================
+   TEXTAREA DOMANDE APERTE
+=========================== */
+
+.quiz-textarea {
+  background: #fffdf5;
+  border-radius: 14px;
+  border: 1px solid #d7c8a0;
+  font-size: 1rem;
+}
+
+/* ===========================
+   QUEST BOX (riutilizzabili)
+=========================== */
+
+.quest-box {
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.quest-box i {
+  margin-right: 10px;
+}
+
+/* varianti */
+.quest-box.primary {
+  background: #ede7d0;
+  border-left: 6px solid #8d6e63;
+}
+
+.quest-box.warning {
+  background: #fff3cd;
+  border-left: 6px solid #ffb300;
+}
+
+.quest-box.info {
+  background: #e3f2fd;
+  border-left: 6px solid #1e88e5;
+}
+
+.quest-box.success {
+  background: #dcedc8;
+  border-left: 6px solid #43a047;
+}
+
+.quest-box.upload {
+  background: #e0f7fa;
+  border-left: 6px solid #00acc1;
+}
+
+/* ===========================
+   DROPZONE – ALTARE
+=========================== */
+
+.dropzone {
+  border: 3px dashed #8e24aa;
+  border-radius: 16px;
+  background: #faf5ff;
+  padding: 30px;
+  text-align: center;
+  font-weight: 700;
+  color: #6a1b9a;
+}
+
+.dropzone .dz-message {
+  font-size: 1.1rem;
+}
+
+/* ===========================
+   FOOTER AZIONI
+=========================== */
+
+.footer-action {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.footer-action button {
+  padding: 16px 40px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* ===========================
+   VALUTAZIONE FINALE
+=========================== */
+
+.quest-box.voto {
+  text-align: center;
+  padding: 40px;
+}
+
+.quest-box.voto i {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.voto-numero {
+  font-size: 3.5rem;
+  font-weight: 900;
+}
+
+.voto-label {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+/* colori voto */
+.quest-box.voto.positivo {
+  background: linear-gradient(135deg, #c8e6c9, #66bb6a);
+  color: #1b5e20;
+}
+
+.quest-box.voto.medio {
+  background: linear-gradient(135deg, #fff9c4, #fbc02d);
+  color: #5d4037;
+}
+
+.quest-box.voto.negativo {
+  background: linear-gradient(135deg, #ffcdd2, #e53935);
+  color: #7f0000;
+}
+/* ===========================
+   RISPOSTA SELEZIONATA
+=========================== */
+
+.quiz-risposta.selected {
+  border-radius: 14px;
+  box-shadow:
+    inset 0 0 0 3px #ffb300,
+    0 0 12px rgba(255, 179, 0, 0.6);
+  background: #fff8e1;
+}
+
+.quiz-risposta.selected .input-group-text {
+  background: #ffecb3;
+  color: #e65100;
+}
+
+.quiz-risposta.selected input {
+  background: #fffde7;
+  font-weight: 700;
+}
+
+.quiz-risposta.quiz-risposta-corretta {
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 2px #2e7d32;
+}
+
+.quiz-risposta.quiz-risposta-corretta .input-group-text {
+  background: #d9f2da;
+  color: #1b5e20;
+}
+
+.quiz-risposta.quiz-risposta-corretta input {
+  background: #edf9ee;
+  color: #1b5e20;
+  font-weight: 700;
+}
+
+.quiz-risposta.quiz-risposta-sbagliata {
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 2px #c62828;
+}
+
+.quiz-risposta.quiz-risposta-sbagliata .input-group-text {
+  background: #fde2e2;
+  color: #7f0000;
+}
+
+.quiz-risposta.quiz-risposta-sbagliata input {
+  background: #fff1f1;
+  color: #7f0000;
+  font-weight: 700;
+}
+
+.quiz-commento-docente {
+  box-shadow: none;
+}

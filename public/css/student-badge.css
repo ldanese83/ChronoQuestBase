@@ -1,0 +1,74 @@
+.badges-header {
+    background: linear-gradient(135deg, #1b5e20, #43a047);
+    border-radius: 18px;
+    padding: 10px 16px;
+    box-shadow: 0 0 20px rgba(60, 180, 90, 0.45);
+    position: relative;
+    overflow: hidden;
+}
+
+.badges-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.25), transparent 60%);
+    pointer-events: none;
+}
+
+.badges-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e8f5e9;
+    font-size: 1.5rem;
+    box-shadow: 0 0 12px rgba(120, 255, 160, 0.8);
+}
+
+.badges-title {
+    margin: 0;
+    margin-left: 1.5vw;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #e8f5e9;
+}
+
+.badge-card-green {
+    background: linear-gradient(145deg, #e8f5e9, #c8e6c9);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 18px rgba(80, 180, 120, 0.35);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.badge-card-green:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 0 28px rgba(100, 220, 150, 0.7);
+}
+
+.badge-name-green {
+    font-weight: bold;
+    font-size: 1.15rem;
+    color: #1b5e20;
+    margin-bottom: 15px;
+}
+
+.badge-image-green {
+    width: 90%;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid #43a047;
+    box-shadow: 0 0 16px rgba(80, 180, 120, 0.6);
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.badge-image-green:hover,
+.badge-image-green:focus {
+    transform: scale(1.08);
+    box-shadow: 0 0 26px rgba(100, 220, 150, 0.9);
+    outline: none;
+}

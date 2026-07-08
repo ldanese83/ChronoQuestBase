@@ -1,0 +1,121 @@
+.corse-page .card {
+    border-radius: 6px;
+}
+
+.corse-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.corse-car-card {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #e3e6f0;
+    border-radius: 6px;
+    padding: 10px;
+    background: #fff;
+}
+
+.corse-car-card img,
+.corse-equipped-car {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #f8f9fc;
+}
+
+.corse-equipped-car {
+    width: min(100%, 320px);
+    height: 220px;
+    margin-bottom: 14px;
+    object-fit: contain;
+}
+
+.corse-prize-row {
+    display: grid;
+    grid-template-columns: 42px repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.corse-prize-summary {
+    border: 1px solid #e3e6f0;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 14px;
+    background: #f8f9fc;
+}
+
+.corse-prize-summary h6 {
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: #4e73df;
+}
+
+.corse-prize-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.corse-prize-items span {
+    border: 1px solid #d1d3e2;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    color: #5a5c69;
+}
+
+.corse-active-race h4 {
+    margin-bottom: 6px;
+}
+
+.corse-car-abilities {
+    margin-top: 6px;
+}
+
+.corse-car-abilities small {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: #858796;
+}
+
+.corse-car-abilities div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.corse-car-abilities span {
+    border: 1px solid #d1d3e2;
+    border-radius: 6px;
+    padding: 3px 7px;
+    background: #f8f9fc;
+    color: #5a5c69;
+    font-size: 0.78rem;
+}
+
+@media (max-width: 768px) {
+    .corse-car-card {
+        grid-template-columns: 64px 1fr;
+    }
+
+    .corse-car-card form {
+        grid-column: 1 / -1;
+    }
+
+    .corse-prize-row {
+        grid-template-columns: 1fr;
+    }
+
+    .corse-equipped-car {
+        height: 180px;
+    }
+}

@@ -1,0 +1,160 @@
+.personalization-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/*Pagina equipaggiamento*/
+/* HEADER */
+.equipment-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.equipment-header h1 {
+  font-size: 2.8rem;
+  font-weight: 900;
+}
+
+.equipment-header p {
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* GRID */
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* CARD */
+.equipment-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border-radius: 20px;
+  padding: 20px;
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+
+.equipment-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* IMMAGINE */
+.equipment-image {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.equipment-image img {
+  max-height: 180px;
+  width: auto;
+}
+
+/* INFO */
+.equipment-info h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.equipment-desc {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.equipment-stats {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.equipment-stats li {
+  font-size: 0.95rem;
+}
+
+/* AZIONI */
+.equipment-action {
+  margin-top: auto;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* STATI */
+.equipment-card.locked {
+  filter: grayscale(0.7);
+}
+
+.equipment-card.owned {
+  border: 2px solid #22c55e;
+}
+
+.equipment-card.equipped {
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.8);
+}
+
+.equipment-card.equipped::after {
+  content: "EQUIPPED";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #22c55e;
+  color: #022c22;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+}
+
+.btn-equipped {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  cursor: default;
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.btn-equip {
+  background: linear-gradient(135deg, #42a5f5, #1e88e5);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  transition: all 0.2s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.btn-equip:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(66, 165, 245, 0.8);
+  color: white !important;
+}
+.btn-equip:active {
+  transform: scale(0.97);
+}
+
+.btn-sell-equipment {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  transition: all 0.2s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.btn-sell-equipment:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+  color: #fff !important;
+}

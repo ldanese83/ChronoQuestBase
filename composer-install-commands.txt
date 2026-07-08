@@ -1,0 +1,15 @@
+Composer commands to recreate the vendor folder
+================================================
+
+From the ChronoQuest project root, run:
+
+composer install --no-dev --optimize-autoloader
+
+If you are preparing a development environment instead, run:
+
+composer install
+
+If Composer is not installed globally, download it from:
+
+https://getcomposer.org/download/
+

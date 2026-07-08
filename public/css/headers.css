@@ -1,0 +1,142 @@
+#motto {
+  font-family: "Cinzel", serif;
+  font-size: 1.1vw;
+  color: #ffd700;
+  text-shadow:
+    0 0 10px #f0e68c,
+    0 0 20px #b8860b,
+    2px 2px 4px #000;
+  letter-spacing: 2px;
+  background: linear-gradient(to right, #ffe680, #d4af37, #f5deb3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.big_heart {
+  font-size: 4vh;
+}
+
+.text-red-900 {
+  color: #f51302 !important;
+}
+.text-red-400 {
+  color: #fa9da2 !important;
+}
+.text-yellow-900 {
+  color: #fcb503 !important;
+}
+.text-blue-900 {
+  color: #007e99 !important;
+}
+.text-blue-400 {
+  color: #15aecf !important;
+}
+.text-grey-900 {
+  color: #5a5f60 !important;
+}
+.text-grey-400 {
+  color: #b5bfc2 !important;
+}
+
+/* =========================
+   PAGE TITLE
+========================= */
+
+.page-title h1 {
+  font-weight: 800;
+  color: #263238;
+}
+
+.page-title p {
+  color: #607d8b;
+  margin-top: 5px;
+}
+
+/*Datatables dei messaggi*/
+table.dataTable tbody tr.selected {
+  background-color: #fff3cd !important;
+}
+table.dataTable tbody tr.selected td {
+  background-color: #fff3cd !important;
+}
+
+.btn-violet {
+  color: #fff;
+  background: linear-gradient(135deg, #6f42c1 0%, #59339d 100%);
+  border-color: #59339d;
+}
+
+.btn-violet:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #7a4ed1 0%, #4f2d8c 100%);
+  border-color: #4f2d8c;
+}
+
+.btn-violet:focus,
+.btn-violet.focus {
+  color: #fff;
+  background: linear-gradient(135deg, #7a4ed1 0%, #4f2d8c 100%);
+  border-color: #4f2d8c;
+  box-shadow: 0 0 0 0.2rem rgba(138, 99, 210, 0.5);
+}
+
+.btn-violet.disabled,
+.btn-violet:disabled {
+  color: #fff;
+  background: linear-gradient(135deg, #6f42c1 0%, #59339d 100%);
+  border-color: #59339d;
+}
+
+.btn-violet:not(:disabled):not(.disabled):active,
+.btn-violet:not(:disabled):not(.disabled).active,
+.show > .btn-violet.dropdown-toggle {
+  color: #fff;
+  background: linear-gradient(135deg, #59339d 0%, #472676 100%);
+  border-color: #472676;
+}
+
+.btn-violet:not(:disabled):not(.disabled):active:focus,
+.btn-violet:not(:disabled):not(.disabled).active:focus,
+.show > .btn-violet.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(138, 99, 210, 0.5);
+}
+.btn-orange {
+  color: #fff;
+  background: linear-gradient(135deg, #fd7e14 0%, #dc6502 100%);
+  border-color: #dc6502;
+}
+
+.btn-orange:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #ff8c2a 0%, #c95b02 100%);
+  border-color: #c95b02;
+}
+
+.btn-orange:focus,
+.btn-orange.focus {
+  color: #fff;
+  background: linear-gradient(135deg, #ff8c2a 0%, #c95b02 100%);
+  border-color: #c95b02;
+  box-shadow: 0 0 0 0.2rem rgba(255, 159, 67, 0.5);
+}
+
+.btn-orange.disabled,
+.btn-orange:disabled {
+  color: #fff;
+  background: linear-gradient(135deg, #fd7e14 0%, #dc6502 100%);
+  border-color: #dc6502;
+}
+
+.btn-orange:not(:disabled):not(.disabled):active,
+.btn-orange:not(:disabled):not(.disabled).active,
+.show > .btn-orange.dropdown-toggle {
+  color: #fff;
+  background: linear-gradient(135deg, #dc6502 0%, #b45301 100%);
+  border-color: #b45301;
+}
+
+.btn-orange:not(:disabled):not(.disabled):active:focus,
+.btn-orange:not(:disabled):not(.disabled).active:focus,
+.show > .btn-orange.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 159, 67, 0.5);
+}

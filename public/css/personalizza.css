@@ -1,0 +1,332 @@
+.thumb_pers_personalizza2 {
+				
+	position:absolute;
+	top:1vh;
+	left:2vw;
+	width:5vw;
+	border-radius:5px;
+	z-index:2;
+	
+}
+
+
+.personalizza {
+	
+	position:absolute;
+	top:2vh;
+	left:32%;
+	width:28vw;
+	border-radius:5px;
+	z-index:2;
+	
+}
+
+.personalizza2 {
+	
+	position:absolute;
+	top:3vh;
+	left:1vw;
+	width:27vw;
+	border-radius:5px;
+	z-index:2;
+	
+}
+
+
+/*personalizzazione personaggio*/
+/* ===== SEZIONE NESSUNA PERSONALIZZAZIONE ===== */
+
+.no-customization-box {
+    margin-top: 3vh;
+    padding: 2rem;
+    border-radius: 20px;
+    background: linear-gradient(
+        135deg,
+        #1a237e,
+        #0d47a1
+    );
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+/* Messaggio */
+.no-customization-message i {
+    font-size: 3rem;
+    color: #ffd54f;
+    margin-bottom: 1rem;
+}
+
+.no-customization-message h2 {
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.no-customization-message p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+/* Pulsante su personalizza che va ad equipaggiamento */
+.action-btn.equipment {
+   background: linear-gradient(135deg, #2ecc71, #27ae60);
+
+}
+
+.action-btn.equipment:hover {
+    box-shadow: 0 0 18px rgba(200,100,255,0.8);
+    transform: translateY(-3px);
+	color:white;
+}
+
+/* Bottone negozio */
+.action-btn.shop {
+    background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+}
+
+.action-btn.shop:hover {
+    box-shadow: 0 0 18px rgba(200,100,255,0.8);
+    transform: translateY(-3px);
+	color:white;
+}
+
+.go-shop-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #4e342e;
+    background: linear-gradient(
+        135deg,
+        #ffd54f,
+        #ffb300
+    );
+    border-radius: 16px;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.go-shop-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+    text-decoration: none;
+    color: #4e342e;
+}
+
+/* Wallet */
+.wallet-box {
+    margin-top: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 18px;
+    background: rgba(0,0,0,0.4);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
+}
+
+.wallet-box i {
+    font-size: 1.6rem;
+    color: #ffd54f;
+}
+
+.wallet-amount {
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+.wallet-label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* selezione personalizzazione */
+/* ====== PREVIEW ====== */
+
+.personalization-preview {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.personalization-avatar-frame {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #4fc3f7 0%,
+            #81d4fa 35%,
+            #b3e5fc 70%,
+            #e1f5fe 100%
+        );
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.35),
+        inset 0 0 25px rgba(255,255,255,.45);
+
+    overflow: hidden;
+}
+
+.personalization-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.personalization-layer-bg {
+    z-index: 1;
+    object-fit: cover;
+    opacity: 0.85;
+	filter: saturate(1.1) contrast(1.05);
+}
+
+
+.personalization-layer-base { z-index: 2; }
+.personalization-layer-hair { z-index: 3; }
+.personalization-layer-custom { z-index: 4; }
+
+/* ====== SALVA ====== */
+
+.personalization-save-box {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.personalization-save-btn {
+    padding: 1rem 3rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+	min-width:50%;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+
+    color: #1b3d1f;
+    background: linear-gradient(
+        135deg,
+        #a5d6a7,
+        #81c784,
+        #66bb6a
+    );
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,.3),
+        inset 0 1px 0 rgba(255,255,255,.6);
+
+    text-shadow: 0 1px 0 rgba(255,255,255,.4);
+}
+
+.personalization-save-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(
+        135deg,
+        #b9f6ca,
+        #81c784
+    );
+}
+
+
+/* ====== SEZIONI ====== */
+
+.personalization-section-title {
+    margin: 2.5rem 0 1rem;
+    font-weight: 900;
+    color: #fff;
+    padding: .7rem 1.2rem;
+    border-radius: 12px;
+}
+
+.fantasy-bg { background: linear-gradient(135deg,#3949ab,#1e88e5); }
+.fantasy-hair { background: linear-gradient(135deg,#8e24aa,#5e35b1); }
+.fantasy-custom { background: linear-gradient(135deg,#c62828,#ad1457); }
+.fantasy-big-bg {
+  background: linear-gradient(135deg, #455a64, #1c313a);
+}
+.fantasy-pet {
+  background: linear-gradient(135deg, #ffb300, #f57c00);
+}
+
+/* ====== GRID ====== */
+
+.personalization-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+    gap: 1.5rem;
+}
+
+.personalization-item {
+    background: #cdcdcd;
+    border-radius: 14px;
+    padding: .8rem;
+    cursor: pointer;
+    text-align: center;
+    transition: transform .2s, box-shadow .2s;
+    border: 2px solid transparent;
+}
+
+.personalization-item img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.personalization-item span {
+    display: block;
+    margin-top: .5rem;
+    font-weight: 700;
+    color: #000;
+    font-size: .85rem;
+}
+
+.personalization-abilities {
+    list-style: none;
+    margin: .5rem 0 0;
+    padding: 0;
+    font-size: .7rem;
+    color: #2c2c2c;
+}
+
+.personalization-abilities li {
+    padding: .15rem 0;
+    font-weight: 600;
+}
+
+.personalization-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.6);
+}
+
+/* selezionato */
+.personalization-item.active {
+    border-color: #ffd54f;
+    box-shadow: 0 0 0 3px rgba(255,213,79,.4);
+}
+
+
+.personalization-sell-btn {
+    margin-top: .55rem;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: .35rem .45rem;
+    background: linear-gradient(135deg,#ef5350,#c62828);
+    color: #fff;
+    font-weight: 700;
+    font-size: .75rem;
+}
+
+.personalization-sell-btn:hover {
+    filter: brightness(1.06);
+}

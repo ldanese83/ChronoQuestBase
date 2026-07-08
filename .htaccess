@@ -1,0 +1,12 @@
+Options -Indexes
+RewriteEngine On
+
+# Block direct access to private project files when the hosting document root
+# cannot be pointed directly to /public.
+RewriteRule (^|/)(\.env|composer\.(json|lock)|Dockerfile|docker-compose\.yml)$ - [F,L]
+RewriteRule ^(config|routes|src|sql|var|vendor|docker)(/|$) - [F,L]
+
+# Send every public request to the real web root of the application.
+RewriteRule ^$ public/ [L]
+RewriteCond %{REQUEST_URI} !/public/
+RewriteRule ^(.*)$ public/$1 [L]

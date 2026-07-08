@@ -1,0 +1,501 @@
+.gold-box {
+  background: linear-gradient(45deg, #ffd700, #ffc200, #ffdf00, #d4af37);
+  border: 1px solid #d4af37;
+  box-shadow:
+    0px 4px 6px rgba(0, 0, 0, 0.2),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  /*padding: 20px;*/
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+.silver-box {
+  background-color: #898989;
+  text-align: center;
+  color: white;
+}
+.bronze-box {
+  color: white;
+  background-color: #cd7f32;
+  text-align: center;
+}
+
+.ruby-shimmer {
+  background: linear-gradient(90deg, #9b111e, #c72c48, #f50057, #8b0031);
+  background-size: 300% 100%;
+  color: white; /* Colore del testo */
+  text-align: center;
+  border: 1px solid #8b0031; /* Bordo in tinta col rubino */
+
+  box-shadow:
+    0px 4px 6px rgba(0, 0, 0, 0.2),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  /*padding: 20px;*/
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.emerald-shimmer {
+  background: linear-gradient(90deg, #50c878, #2e8b57, #a8ff8f, #046307);
+  background-size: 300% 100%;
+  animation: shimmer 6s ease-in-out infinite;
+  color: white; /* Colore del testo */
+  text-align: center;
+  border: 1px solid #2e8b57; /* Bordo in tinta con lo smeraldo */
+}
+
+.poteri_cards {
+  margin-left: 0.3vw;
+  padding-left: 0.3vw;
+}
+.img_card_potere {
+  margin: 0 auto;
+  width: 5vw;
+  border-radius: 5px;
+  border: 1px solid black;
+  box-shadow: -2px 2px 4px 2px grey;
+}
+
+.power-card {
+  background: rgba(20, 20, 40, 0.85);
+  border: 2px solid #444;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+
+.power-card:hover {
+  transform: translateY(-10px);
+  box-shadow:
+    0 0 30px #00ffff,
+    0 0 60px #00ffff inset;
+}
+
+.power-img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.power-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #00ffff;
+  text-shadow: 1px 1px 5px #000;
+}
+
+.mana-cost {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  color: #9dd9ff;
+  font-weight: bold;
+  text-shadow: 1px 1px 4px #000;
+}
+
+.mana-cost i {
+  color: #00aaff;
+  margin-right: 6px;
+  text-shadow: 0 0 6px #00aaff;
+}
+
+.power-desc {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #999;
+}
+
+.use-btn {
+  background: linear-gradient(to right, #00ffff, #0066ff);
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.use-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #00ffff;
+}
+
+.mana-slots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: #e2e8f0;
+  border-radius: 12px;
+  margin: 2vh auto;
+}
+
+/* Icona potenziata */
+.mana-flask {
+  color: #fbbf24;
+  font-size: 3vw;
+  margin-right: 6px;
+}
+
+/* QUADRATINI BASE (vuoti) */
+.slot {
+  width: 3vw;
+  height: 3vw;
+  border-radius: 6px;
+  background: linear-gradient(145deg, #dbe2e8, #b6c1cc);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+
+  border: 2px solid #c9a75a; /* bordo dorato */
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+/* Effetto cristallo */
+.slot::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -30%;
+  width: 160%;
+  height: 160%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0)
+  );
+  transform: rotate(25deg);
+}
+
+.slot.full {
+  background: radial-gradient(
+    circle at 30% 30%,
+    hsl(var(--hue), 100%, var(--light1)),
+    hsl(var(--hue), 100%, var(--light2))
+  );
+  animation: fillCrystal 0.6s ease-in forwards;
+  box-shadow:
+    0 0 12px hsl(var(--hue), 100%, var(--light2)),
+    0 0 22px hsl(var(--hue), 100%, calc(var(--light1) + 10%)),
+    inset 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+/* Animazione riempimento cristallo */
+@keyframes fillCrystal {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Effetti GOLD + GLOW AL PASSAGGIO DEL MOUSE */
+.slot:hover {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 16px #facc15,
+    0 0 26px #fde047,
+    inset 0 0 10px rgba(255, 255, 255, 0.4);
+  border-color: #ffe680;
+}
+
+/* Glow interno animato solo su hover */
+.slot:hover::before {
+  animation: crystalShine 0.7s ease-out;
+}
+
+/* Effetto bagliore che scorre */
+@keyframes crystalShine {
+  0% {
+    transform: rotate(25deg) translateY(-150%);
+  }
+  100% {
+    transform: rotate(25deg) translateY(150%);
+  }
+}
+
+/* -------------------- */
+/* POWER STATUS BLOCK  */
+/* -------------------- */
+
+.power-status-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.power-status {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 22px;
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  box-shadow: 0 0 28px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+/* bagliore */
+.power-status::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 255, 255, 0.25),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* icona */
+.power-status-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.5);
+}
+
+/* testo */
+.power-status-text h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.power-status-text h2 span {
+  font-size: 1.2rem;
+  margin-left: 6px;
+}
+
+.power-status-text p {
+  margin: 6px 0 0;
+  font-size: 1.05rem;
+}
+
+/* -------------------- */
+/* SUCCESS STATE       */
+/* -------------------- */
+
+.power-status.success {
+  background: linear-gradient(135deg, #1b5e20, #66bb6a);
+  color: #e8f5e9;
+}
+
+.power-status.success .power-status-icon {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(120, 255, 160, 0.9);
+}
+
+/* -------------------- */
+/* LOCKED STATE        */
+/* -------------------- */
+
+.power-status.locked {
+  background: linear-gradient(135deg, #37474f, #546e7a);
+  color: #eceff1;
+}
+
+.power-status.locked .power-status-icon {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffccbc;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.6);
+}
+
+/* -------------------- */
+/* POWER TABLE CARD    */
+/* -------------------- */
+
+.power-table-card {
+  border-radius: 22px;
+  background: linear-gradient(145deg, #ede7f6, #d1c4e9);
+  box-shadow: 0 0 30px rgba(80, 40, 120, 0.5);
+}
+
+/* header */
+.power-table-card .card-header {
+  background: linear-gradient(135deg, #4a148c, #7b1fa2);
+  color: #f3e5f5;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* -------------------- */
+/* TABLE BASE          */
+/* -------------------- */
+
+.table_choose_power {
+}
+
+.table_choose_power th {
+  background: #5e35b1;
+  color: #ede7f6;
+  text-align: center;
+  border: none;
+}
+
+.table_choose_power td {
+  vertical-align: middle;
+  border: none;
+}
+
+/* -------------------- */
+/* POWER ROW STATES    */
+/* -------------------- */
+
+.power-row-available {
+  background: #f3e5f5;
+}
+
+.power-row-available:hover {
+  box-shadow: 0 0 18px rgba(150, 100, 220, 0.6);
+}
+
+.power-row-locked {
+  background: #eeeeee;
+  opacity: 0.55;
+}
+
+/* -------------------- */
+/* CELLS               */
+/* -------------------- */
+
+.power-img-cell {
+  text-align: center;
+}
+
+.power-thumb {
+  width: 90px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+.power-level {
+  font-weight: bold;
+  color: #6a1b9a;
+}
+
+.power-name2 {
+  font-weight: bold;
+  color: #2e1b0f; /* molto leggibile */
+  text-shadow: none;
+  font-size: 1.05rem;
+}
+
+.power-desc2 {
+  font-size: 0.95rem;
+  color: #3e2723;
+}
+
+.power-mana2 {
+  font-weight: bold;
+  color: #1565c0;
+  text-align: center;
+}
+
+.power-mana2 i {
+  margin-right: 6px;
+}
+
+/* -------------------- */
+/* CHOOSE BUTTON       */
+/* -------------------- */
+
+.power-choose-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 14px rgba(150, 80, 220, 0.7);
+  transition: all 0.3s ease;
+}
+
+.power-choose-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 0 22px rgba(180, 120, 255, 0.9);
+  color: #fff;
+}
+
+thead.rare-bronze th {
+  background: #cd7f32;
+  color: #fff;
+}
+thead.rare-silver th {
+  background: #90a4ae;
+  color: #fff;
+}
+thead.rare-gold th {
+  background: #f9a825;
+  color: #4e342e;
+}
+thead.rare-ruby th {
+  background: #b71c1c;
+  color: #fff;
+}
+thead.rare-emerald th {
+  background: #1b5e20;
+  color: #e8f5e9;
+}
+
+.rarity-badge {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.rarity-badge.bronze {
+  background: #cd7f32;
+}
+.rarity-badge.silver {
+  background: #90a4ae;
+}
+.rarity-badge.gold {
+  background: #f9a825;
+  color: #4e342e;
+}
+.rarity-badge.ruby {
+  background: #b71c1c;
+}
+.rarity-badge.emerald {
+  background: #1b5e20;
+}

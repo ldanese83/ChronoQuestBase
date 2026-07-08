@@ -1,0 +1,180 @@
+/* -------------------- */
+/* HEADER CLASSE       */
+/* -------------------- */
+
+.class-header {
+    background: linear-gradient(135deg, #0d47a1, #00acc1);
+    border-radius: 18px;
+    padding: 10px 13px;
+    box-shadow: 0 0 25px rgba(0, 200, 200, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+/* leggero bagliore */
+.class-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left,
+        rgba(255,255,255,0.18),
+        transparent 60%);
+}
+
+/* icona */
+.class-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e0fffa;
+    font-size: 1.6rem;
+    box-shadow: 0 0 12px rgba(0,255,230,0.6);
+}
+
+/* titolo */
+.class-title {
+	margin:0;
+    margin-left: 1.5vw;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #e8ffff;
+    text-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+
+/* -------------------- */
+/* ACTION BUTTONS      */
+/* -------------------- */
+
+.class-actions {
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    transition: all .3s ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+/* =========================
+   CLASS CARD
+========================= */
+
+.class-card-link {
+    text-decoration: none;
+}
+.class-card-link:hover {
+    text-decoration: none;
+}
+
+.class-card {
+    height: 100%;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-top: 6px solid var(--accent);
+    transition: all .35s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.class-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+}
+
+/* =========================
+   HEADER (ICON)
+========================= */
+
+.class-card-header {
+    text-align: center;
+    padding: 24px;
+    background: linear-gradient(
+        135deg,
+        rgba(0,0,0,0.05),
+        transparent
+    );
+}
+
+.class-card-header i {
+    font-size: 2.6rem;
+    color: var(--accent);
+    opacity: 0.85;
+}
+
+/* =========================
+   BODY
+========================= */
+
+.class-card-body {
+    padding: 20px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.class-year {
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #78909c;
+}
+
+.class-name {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #263238;
+}
+
+/* =========================
+   FOOTER (CALL TO ACTION)
+========================= */
+
+.class-card-footer {
+    padding: 14px 20px;
+    background: rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--accent);
+    transition: background .3s ease;
+}
+
+.class-card:hover .class-card-footer {
+    background: rgba(0,0,0,0.08);
+}
+
+.class-card-footer i {
+    transition: transform .3s ease;
+}
+
+.class-card:hover .class-card-footer i {
+    transform: translateX(6px);
+}
+
+.class-year-section {
+    margin-bottom: 1.5rem;
+}
+
+.class-year-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    border-left: 4px solid #0d6efd;
+    padding-left: 10px;
+}

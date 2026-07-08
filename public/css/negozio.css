@@ -1,0 +1,315 @@
+/* Negozio */
+
+
+/* Indietro */
+.action-btn.back {
+    background: linear-gradient(135deg, #455a64, #607d8b);
+}
+
+.action-btn.back:hover {
+    box-shadow: 0 0 16px rgba(120,150,180,0.8);
+    transform: translateY(-3px);
+	color:white;
+}
+
+/* icone */
+.action-btn i {
+    font-size: 1.1rem;
+}
+.class-header::before {
+    pointer-events: none;
+}
+
+.class-header > * {
+    position: relative;
+    z-index: 2;
+}
+
+.class-actions {
+    display: flex;
+    gap: 14px;
+}
+
+
+/*negozio*/
+/* =========================
+   SHOP HEADER
+========================= */
+
+.shop-header {
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    color: #fff;
+    padding: 24px;
+    border-radius: 18px;
+    font-weight: 900;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,.35);
+}
+
+/* =========================
+   COIN WALLET
+========================= */
+
+.shop-wallet {
+    margin: 20px 0;
+    padding: 18px 24px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ffd54f, #ffb300);
+    color: #5d4037;
+    font-size: 1.4rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: inset 0 2px 6px rgba(255,255,255,.6),
+                0 6px 16px rgba(0,0,0,.3);
+	text-align:center;
+}
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.shop-section-title {
+    margin-top: 40px;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-size: 1.25rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.shop-bg     { background:#e3f2fd; border-left:6px solid #42a5f5; }
+.shop-hair   { background:#e8f5e9; border-left:6px solid #66bb6a; }
+.shop-custom { background:#fdecea; border-left:6px solid #ef5350; }
+.shop-big-bg {
+  background: #f3e5f5;
+  border-left: 6px solid #ab47bc;
+}
+.shop-pet {
+  background: #fff8e1;      /* giallo chiaro caldo */
+  border-left: 6px solid #ffb300; /* arancio/oro */
+}
+
+/* =========================
+   SHOP GRID
+========================= */
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+/* =========================
+   SHOP ITEM CARD
+========================= */
+
+.shop-item {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0,0,0,.18);
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+}
+
+.shop-item:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(0,0,0,.35);
+}
+
+/* =========================
+   ITEM HEADER
+========================= */
+
+.shop-item-header {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    padding: 14px;
+    font-weight: 900;
+    text-align: center;
+    color: #0d47a1;
+}
+
+/* =========================
+   ITEM IMAGE
+========================= */
+
+.shop-item-body {
+    padding: 18px;
+    text-align: center;
+}
+
+.shop-item-body img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 6px 14px rgba(0,0,0,.3);
+}
+
+/* =========================
+   ITEM COST
+========================= */
+
+.shop-item-cost {
+    margin-top: 14px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #f9a825;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* =========================
+   UPLOAD CARD
+========================= */
+
+.shop-upload {
+    background: linear-gradient(135deg, #ffebee, #ffcdd2);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.25);
+    text-align: center;
+}
+
+.shop-upload-description {
+    background: #fff;
+    border: 1px solid #ffcdd2;
+    border-radius: 14px;
+    color: #37474f;
+    line-height: 1.55;
+    padding: 16px 18px;
+    box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+
+.shop-item-button {
+    border: 0;
+    color: inherit;
+    display: block;
+    padding: 0;
+    text-align: initial;
+    width: 100%;
+}
+
+.shop-item-button .shop-item-header,
+.shop-item-button .shop-item-body,
+.shop-item-button .shop-item-cost {
+    display: block;
+}
+
+.shop-item-button .shop-item-cost {
+    display: flex;
+}
+
+.shop-item-button:disabled {
+    pointer-events: none;
+}
+
+/* =========================
+   ITEM NON ACQUISTABILE
+========================= */
+
+.shop-item.locked {
+    position: relative;
+    opacity: 0.85;
+    cursor: not-allowed;
+    filter: grayscale(20%);
+}
+
+/* Glow rosso */
+.shop-item.locked::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    box-shadow:
+        0 0 12px rgba(229, 57, 53, 0.9),
+        0 0 28px rgba(229, 57, 53, 0.6),
+        inset 0 0 12px rgba(229, 57, 53, 0.5);
+    pointer-events: none;
+}
+
+/* Hover più aggressivo */
+.shop-item.locked:hover {
+    transform: none;
+    box-shadow: 0 0 25px rgba(229, 57, 53, 0.9);
+}
+
+.shop-item-abilities {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    font-size: 0.95rem;
+    color: #37474f;
+}
+
+.shop-item-abilities li {
+    padding: 4px 0;
+    font-weight: 600;
+}
+
+@keyframes redPulse {
+    0%   { box-shadow: 0 0 8px rgba(229,57,53,.6); }
+    50%  { box-shadow: 0 0 24px rgba(229,57,53,1); }
+    100% { box-shadow: 0 0 8px rgba(229,57,53,.6); }
+}
+
+.shop-item.locked::after {
+    animation: redPulse 1.6s infinite ease-in-out;
+}
+.shop-discount-banner {
+    margin-top: 18px;
+    background: linear-gradient(135deg, #ff7043, #ffca28);
+    color: #3e2723;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.24);
+}
+
+.shop-discount-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+}
+
+.shop-discount-motivazione {
+    background: rgba(255,255,255,.72);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-top: 10px;
+}
+
+.shop-discount-motivazione img {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 14px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.25);
+    border: 3px solid rgba(255,255,255,.7);
+}
+
+.shop-item-cost-original {
+    text-decoration: line-through;
+    color: #78909c;
+    font-size: .95rem;
+    margin-right: 6px;
+}
+
+
+.sconti-motivazione-tabella img {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 8px auto;
+    border-radius: 10px;
+    box-shadow: 0 6px 14px rgba(0,0,0,.2);
+}

@@ -1,0 +1,236 @@
+.ftm-page {
+    background: #1f1028;
+    min-height: calc(100vh - 100px);
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.ftm-monster-frame {
+    border: 2px solid #7f1d1d;
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+    color: #f8f1e7;
+    background: linear-gradient(135deg, #3b0f1f 0%, #24113a 100%);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35), inset 0 0 30px rgba(255, 177, 66, 0.08);
+}
+
+.ftm-monster-frame img {
+    width: min(100%, 360px);
+    height: 300px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.ftm-monster-frame .ftm-student-monster-image {
+    width: min(100%, 560px);
+    height: 460px;
+    padding: 18px;
+    border: 4px solid #b45309;
+    border-radius: 18px;
+    background: radial-gradient(circle at center, rgba(255, 209, 102, 0.13), rgba(22, 11, 29, 0.74) 68%);
+    box-shadow:
+        0 0 0 2px rgba(255, 209, 102, 0.22),
+        0 18px 36px rgba(0, 0, 0, 0.38),
+        inset 0 0 24px rgba(255, 209, 102, 0.12);
+}
+
+.ftm-monster-frame h2 {
+    color: #ffd166;
+    font-weight: 800;
+}
+
+.ftm-hp {
+    height: 24px;
+    border: 1px solid #ffd166;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #160b1d;
+    margin: 12px auto;
+    max-width: 520px;
+}
+
+.ftm-hp span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #ef4444, #f97316);
+}
+
+.ftm-powers {
+    color: #fca5a5;
+}
+
+.ftm-list-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #e3e6f0;
+    padding: 8px 0;
+}
+
+.ftm-list-row img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.ftm-manage-form,
+.ftm-item-edit-form {
+    display: grid;
+    gap: 8px;
+}
+
+.ftm-manage-form {
+    grid-template-columns: 1fr 110px auto;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ftm-manage-row {
+    grid-template-columns: 64px 1fr auto;
+    align-items: start;
+}
+
+.ftm-item-edit-form {
+    grid-template-columns: minmax(140px, 1.3fr) minmax(130px, 1fr) minmax(120px, 0.9fr) 90px minmax(150px, 1fr) auto;
+    align-items: center;
+}
+
+.ftm-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.ftm-inactive-row {
+    opacity: 0.62;
+}
+
+.ftm-equipment-grid,
+.ftm-item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.ftm-slot,
+.ftm-item-card {
+    border: 1px solid #3b1f4a;
+    border-radius: 8px;
+    padding: 12px;
+    background: #fff;
+    text-align: center;
+}
+
+.ftm-slot img,
+.ftm-item-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.ftm-item-card {
+    display: grid;
+    gap: 6px;
+}
+
+.ftm-defeat-modal .modal-content {
+    overflow: hidden;
+    border: 2px solid #b45309;
+    border-radius: 12px;
+    color: #f8f1e7;
+    background: linear-gradient(135deg, #2b1025 0%, #140b1d 100%);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45);
+}
+
+.ftm-defeat-modal .modal-header,
+.ftm-defeat-modal .modal-footer {
+    border-color: rgba(255, 209, 102, 0.24);
+}
+
+.ftm-defeat-monster {
+    position: relative;
+    width: min(100%, 420px);
+    margin: 0 auto 18px;
+    padding: 16px;
+    border: 3px solid #7f1d1d;
+    border-radius: 16px;
+    background: radial-gradient(circle at center, rgba(127, 29, 29, 0.35), rgba(20, 11, 29, 0.9) 70%);
+}
+
+.ftm-defeat-monster img {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    opacity: 0.72;
+    filter: grayscale(0.35);
+}
+
+.ftm-defeat-skull {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    color: #f8f1e7;
+    font-size: 5rem;
+    text-shadow: 0 0 18px rgba(0, 0, 0, 0.85), 0 0 28px rgba(239, 68, 68, 0.75);
+}
+
+.ftm-defeat-message {
+    text-align: center;
+    color: #ffd166;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.ftm-drop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.ftm-drop-card {
+    display: grid;
+    gap: 6px;
+    padding: 12px;
+    border: 1px solid rgba(255, 209, 102, 0.35);
+    border-radius: 8px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.ftm-drop-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .ftm-monster-frame .ftm-student-monster-image {
+        height: 340px;
+        padding: 12px;
+    }
+
+    .ftm-defeat-monster img {
+        height: 220px;
+    }
+
+    .ftm-list-row {
+        grid-template-columns: 56px 1fr;
+    }
+
+    .ftm-list-row form {
+        grid-column: 1 / -1;
+    }
+
+    .ftm-manage-form,
+    .ftm-item-edit-form {
+        grid-template-columns: 1fr;
+    }
+
+    .ftm-actions {
+        justify-content: flex-start;
+    }
+}

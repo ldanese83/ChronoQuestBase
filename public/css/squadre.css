@@ -1,0 +1,382 @@
+/*.squadra-page {
+	background: radial-gradient(circle at top, rgba(42, 61, 92, 0.6), rgba(13, 27, 42, 0.95));
+	border-radius: 18px;
+	padding: 24px;
+}
+
+.squadra-page .class-header .class-title,
+.squadra-page .h3 {
+	color: #f2e9d8;
+	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.squadra-card {
+	background: rgba(11, 16, 32, 0.9);
+	border: 1px solid rgba(212, 175, 55, 0.4);
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+	color: #f7f1e3;
+}
+
+.squadra-card .card-header {
+	background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(13, 27, 42, 0.95));
+	border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.squadra-card .text-muted {
+	color: rgba(247, 241, 227, 0.65) !important;
+}
+
+.team-emblem {
+	max-width: 150px;
+	max-height: 150px;
+	border-radius: 18px;
+	padding: 6px;
+	border: 2px solid rgba(212, 175, 55, 0.6);
+	background: rgba(11, 16, 32, 0.85);
+	box-shadow: 0 0 14px rgba(99, 102, 241, 0.6), 0 0 32px rgba(34, 197, 94, 0.25);
+}
+
+.team-type-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	gap: 16px;
+}
+
+.team-type-option {
+	cursor: pointer;
+}
+
+.team-type-option input {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.team-type-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	padding: 12px;
+	border-radius: 16px;
+	border: 2px solid rgba(255, 255, 255, 0.15);
+	background: rgba(17, 24, 39, 0.8);
+	transition: all 0.2s ease-in-out;
+	box-shadow: inset 0 0 12px rgba(15, 23, 42, 0.6);
+}
+
+.team-type-card img {
+	width: 110px;
+	height: 110px;
+	object-fit: contain;
+	filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
+}
+
+.team-type-label {
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	color: #f7f1e3;
+}
+
+.team-type-option input:checked + .team-type-card {
+	border-color: rgba(212, 175, 55, 0.9);
+	box-shadow: 0 0 18px rgba(212, 175, 55, 0.6), 0 0 40px rgba(99, 102, 241, 0.35);
+	transform: translateY(-2px);
+}
+
+.team-type-option.is-locked {
+	cursor: default;
+}
+
+.team-type-option.is-locked .team-type-card {
+	opacity: 0.7;
+	filter: grayscale(10%);
+}*/
+
+.team-header {
+    background: linear-gradient(135deg, #3a3a3a, #d6d6d6);
+    border-radius: 18px;
+    padding: 10px 13px;
+    box-shadow: 0 0 25px rgba(0, 200, 200, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+/* leggero bagliore */
+.team-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left,
+        rgba(255,255,255,0.18),
+        transparent 60%);
+}
+
+/* titolo */
+.team-title {
+	margin:0;
+    margin-left: 1vw;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #e8ffff;
+    text-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+
+/*.squadra-card {
+    background: linear-gradient(135deg, #0f0f0f 0%, #5e5e5e 100%);
+    border-radius: 14px;
+    border: 1px solid rgba(255,215,150,.15);
+    box-shadow:
+        0 0 0 1px rgba(255,215,150,.08),
+        0 8px 24px rgba(0,0,0,.8);
+    color: #eee;
+}
+
+.squadra-card .card-header {
+    background: linear-gradient(135deg, #2b2f44, #1b1f2e);
+    border-bottom: 1px solid rgba(255,215,150,.2);
+}
+
+.squadra-card .card-header h6 {
+    color: #ffd27d;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-shadow: 0 1px 3px #000;
+}
+
+.team-emblem {
+    max-width: 120px;
+    border-radius: 12px;
+    border: 2px solid #ffcc66;
+    box-shadow:
+        0 0 10px rgba(255,200,80,.7),
+        inset 0 0 10px rgba(0,0,0,.6);
+    background: radial-gradient(circle, #2a2d3a, #151720);
+    padding: 6px;
+}*/
+/* CARD SQUADRA */
+.squadra-card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(135deg, #5e5e5e 0%, #0f0f0f 100%);
+    color: #f1f1f1;
+}
+
+/* HEADER SENZA DOPPIO BORDO */
+.squadra-card .card-header {
+    background: rgba(0,0,0,0.35);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0;
+}
+
+.squadra-card .card-header h6 {
+    color: #29a2f2 !important;
+    text-shadow: 0 0 6px rgba(138, 207, 255, 0.35);
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* BODY */
+.squadra-card .card-body {
+    background: transparent;
+}
+
+/* TESTI */
+.squadra-card p {
+    margin-bottom: 0.6rem;
+}
+
+.squadra-card strong {
+    color: #ffdf8c;
+}
+
+/* EMBLEMA */
+.team-emblem-frame {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    border-radius: 14px;
+    background: radial-gradient(circle at top, #777, #222);
+    padding: 8px;
+    box-shadow:
+        inset 0 0 12px rgba(255,255,255,0.15),
+        0 8px 20px rgba(0,0,0,0.6);
+}
+
+.team-emblem-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+
+/*.team-type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 16px;
+}
+
+*/
+.team-type-option {
+    cursor: pointer;
+}
+
+.team-type-option input {
+    display: none;
+}
+
+/*.team-type-card {
+    background: linear-gradient(180deg, #23283b, #161a27);
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: all .25s ease;
+    box-shadow: 0 6px 16px rgba(0,0,0,.7);
+}*/
+.team-type-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #4f4f4f, #1a1a1a);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden; /* 🔥 QUESTO risolve l’uscita immagini */
+}
+
+.team-type-card img {
+   
+}
+
+/*
+.team-type-label {
+    display: block;
+    font-weight: 700;
+    color: #f0e6d2;
+}*/
+.team-type-label {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #9ad9ff;
+    text-align: center;
+    text-shadow: 0 0 6px rgba(138,207,255,0.35);
+}
+
+/*.team-type-option input:checked + .team-type-card {
+    border-color: #ffd27d;
+    box-shadow:
+        0 0 14px rgba(255,215,100,.8),
+        inset 0 0 10px rgba(0,0,0,.6);
+}*/
+
+.team-type-option input:checked + .team-type-card {
+    outline: 3px solid #5ddcff;
+    box-shadow: 0 0 16px rgba(93,220,255,0.7);
+}
+
+.team-type-option.is-locked {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/*
+.team-type-option.is-locked {
+    opacity: .6;
+    cursor: not-allowed;
+}*/
+
+.team-type-option:hover .team-type-card {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.6);
+}
+
+.squadra-card p strong {
+    color: #ffd27d;
+}
+
+.squadra-card p {
+    margin-bottom: .5rem;
+    color: #ddd;
+}
+
+.badge-success {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, #f39c12, #d35400);
+}
+.btn-primary-team {
+    background: linear-gradient(135deg, #3f51b5, #1a237e);
+    border: none;
+	color:white;
+	margin-top:1.5em;
+	padding: 10px 20px;
+}
+
+.btn-success-team {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border: none;
+	color:white;
+	padding:10px 20px;
+	margin-right:1em;
+	margin-top:1.5em;
+}
+.btn-success-team:hover {
+	color:#efefef;
+}
+
+.btn-danger-team {
+    background: linear-gradient(135deg, #e53935, #b71c1c);
+    border: none;
+	padding:10px 20px;
+	color:white;
+	margin-top:1.5em;
+}
+.btn-danger-team:hover {
+   color:#efefef;
+}
+.btn-primary-team:hover {
+   color:#efefef;
+}
+.btn-team:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 10px rgba(255,215,150,.4);
+}
+.squadra-page {
+    
+    padding-bottom: 40px;
+}
+
+.team-type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.team-type-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;   /* 🔥 QUADRATO PERFETTO */
+    border-radius: 12px;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #666, #222);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+
+.team-type-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.team-type-card:hover .team-type-image-wrapper {
+    box-shadow: inset 0 0 18px rgba(120,200,255,0.35);
+}

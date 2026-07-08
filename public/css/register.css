@@ -1,0 +1,94 @@
+ @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap');
+
+    body {
+      background: url('../assets/images/pergamena.png') center/cover no-repeat;
+      font-family: 'Uncial Antiqua', cursive;
+      color: #3e2f1c;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .registration-wrapper {
+      display: flex;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      max-width: 1000px;
+      width: 100%;
+      animation: fadeInUp 1.2s ease;
+	  margin:0 auto;
+    }
+
+    .logo-section {
+      flex: 1;
+      background: url('../assets/images/cronoquest.png') top center no-repeat;
+      background-size: contain;
+      min-height: 100%;
+      border-right: 2px solid #c4b998;
+    }
+
+    .form-section {
+      flex: 2;
+      padding: 40px;
+    }
+
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      background-color: #5a3e36;
+      border-color: #4d322d;
+      transition: transform 0.2s ease;
+      z-index: 1;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.03);
+    }
+
+    .btn-primary::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-20deg);
+      animation: shimmer 2.5s infinite;
+      z-index: 0;
+    }
+
+    @keyframes shimmer {
+      0% { left: -75%; }
+      100% { left: 125%; }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+	.btn-primary:hover {
+      background-color: #6f4b41;
+    }
+	 .register-link a {
+      color: #5a3e36;
+      text-decoration: underline;
+	  margin-top:3vh;
+	  text-align:center;
+	  display:block;
+	  
+    }
