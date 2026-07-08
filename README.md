@@ -41,8 +41,6 @@ ChronoQuest is released under the **GNU GPL v3** license and is completely free 
 
 # 📸 Screenshots
 
-Replace the following placeholders with your real screenshots.
-
 ## Dashboard
 
 ![Dashboard](public/readme/screenshot/dashboard_docente.png)
