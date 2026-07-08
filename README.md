@@ -45,29 +45,29 @@ Replace the following placeholders with your real screenshots.
 
 ## Dashboard
 
-![Dashboard](readme/screenshot/dashboard_docente.png)
+![Dashboard](public/readme/screenshot/dashboard_docente.png)
 
 
 ## Hero Editor
 
-![Heroes](readme/screenshot/personaggio.png)
+![Heroes](public/readme/screenshot/personaggio.png)
 
 ## Quest Editor
 
-![Quest](readme/screenshot/quest.png)
+![Quest](public/readme/screenshot/quest.png)
 
 
 ## Exercises
 
-![Classroom](readme/screenshot/esercizi.png)
+![Classroom](public/readme/screenshot/esercizi.png)
 
 ## Powers
 
-![Powers](readme/screenshot/poteri.png)
+![Powers](public/readme/screenshot/poteri.png)
 
 ## Personalizzazioni
 
-![Tests](readme/screenshot/personalizza.png)
+![Tests](public/readme/screenshot/personalizza.png)
 
 ---
 
