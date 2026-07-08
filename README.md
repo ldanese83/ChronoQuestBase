@@ -1,7 +1,7 @@
 # ChronoQuest
 
 <p align="center">
-  <img src="/readme/banner1.png" alt="ChronoQuest Banner">
+  <img src="public/readme/banner1.png" alt="ChronoQuest Banner">
 </p>
 
 # ChronoQuest
