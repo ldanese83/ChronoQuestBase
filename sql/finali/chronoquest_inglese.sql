@@ -203,7 +203,7 @@ CREATE TABLE `ct_alerts` (
   `link` varchar(200) NOT NULL,
   `doc_stud` int NOT NULL,
   `fk_studente` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -485,7 +485,7 @@ CREATE TABLE `ct_classi_esercizi_attivi` (
   `fk_capitolo` int NOT NULL,
   `fk_esercizio` int NOT NULL,
   `attivo` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_classi_esercizi_attivi`
@@ -571,7 +571,7 @@ CREATE TABLE `ct_classi_quest` (
   `id_classe_quest` int NOT NULL,
   `fk_classe` int NOT NULL,
   `fk_quest` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_classi_quest`
@@ -596,7 +596,7 @@ CREATE TABLE `ct_consegne_studenti` (
   `data_consegna` datetime DEFAULT NULL,
   `problema` int DEFAULT NULL,
   `descrizione_problema` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -999,7 +999,7 @@ CREATE TABLE `ct_esercizi` (
   `monete_guadagnate` int DEFAULT NULL,
   `testo_ese104` text,
   `livello_diff` int DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_esercizi`
@@ -1089,7 +1089,7 @@ CREATE TABLE `ct_esercizio_domande` (
   `fk_esercizio` int NOT NULL,
   `fk_domanda` int NOT NULL,
   `fk_studente` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -1120,7 +1120,7 @@ CREATE TABLE `ct_esercizio_risposte` (
   `data_risposta` date NOT NULL,
   `fk_consegna` int NOT NULL,
   `commento_prof` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -1133,7 +1133,7 @@ CREATE TABLE `ct_esercizi_quest` (
   `fk_capitolo` int NOT NULL,
   `fk_esercizio` int NOT NULL,
   `progressivo` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_esercizi_quest`
@@ -1293,7 +1293,7 @@ INSERT INTO `ct_libri_testo` (`id_libro_testo`, `titolo_libro`, `casa_editrice`,
 CREATE TABLE `ct_mail_abilitate` (
   `id_mail_abilitata` int NOT NULL,
   `mail` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -1368,7 +1368,7 @@ CREATE TABLE `ct_personaggi` (
   `fk_classe` int NOT NULL,
   `img_senza_sfondo` varchar(200) NOT NULL,
   `originale` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_personaggi`
@@ -1663,7 +1663,7 @@ CREATE TABLE `ct_plugin_classe` (
   `fk_classe` int NOT NULL,
   `attivo` int NOT NULL DEFAULT '0',
   `configurazione_json` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -1675,13 +1675,13 @@ CREATE TABLE `ct_poteri` (
   `id_potere` int NOT NULL,
   `nome_potere` varchar(100) NOT NULL,
   `descrizione_potere` text NOT NULL,
-  `img_potere` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `img_potere` varchar(150) CHARACTER SET utf8mb4 NOT NULL,
   `livello` int NOT NULL,
   `mana_necessario` int NOT NULL,
   `fk_classe` int NOT NULL,
   `fisso` int NOT NULL DEFAULT '0',
   `originale` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_poteri`
@@ -1725,7 +1725,7 @@ CREATE TABLE `ct_punizioni` (
   `descrizione_punizione` text NOT NULL,
   `img_punizione` varchar(200) NOT NULL,
   `fk_classe` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_punizioni`
@@ -1756,7 +1756,7 @@ CREATE TABLE `ct_quest` (
   `piantina_quest` varchar(200) NOT NULL,
   `originale` int NOT NULL DEFAULT '0',
   `blocca_ese` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_quest`
@@ -2910,7 +2910,7 @@ CREATE TABLE `ct_set_personalizzazioni` (
   `nome_set` varchar(200) NOT NULL,
   `colore_set` varchar(100) NOT NULL,
   `tipologia` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_set_personalizzazioni`
@@ -2990,7 +2990,7 @@ CREATE TABLE `ct_studenti` (
   `vite_ultima_visita` int DEFAULT NULL,
   `scudi` int NOT NULL DEFAULT '0',
   `scudi_massimi` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -3003,7 +3003,7 @@ CREATE TABLE `ct_studenti_classi` (
   `fk_studente` int NOT NULL,
   `fk_classe` int NOT NULL,
   `esercizi_cons` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -3016,7 +3016,7 @@ CREATE TABLE `ct_studenti_poteri` (
   `fk_studente` int NOT NULL,
   `fk_potere` int NOT NULL,
   `usato` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -3075,7 +3075,7 @@ INSERT INTO `ct_tipi_domande` (`id_tipo_domanda`, `tipo`) VALUES
 CREATE TABLE `ct_tipi_esercizio` (
   `id_tipo_esercizio` int NOT NULL,
   `tipo` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_tipi_esercizio`
@@ -3120,7 +3120,7 @@ CREATE TABLE `ct_traduzioni` (
   `traduzione` text NOT NULL,
   `lingua` varchar(10) NOT NULL,
   `fk_collegamento` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_traduzioni`
@@ -3636,7 +3636,7 @@ CREATE TABLE `ct_xp_livello` (
   `livello` int NOT NULL,
   `xp` int NOT NULL,
   `xp_cumulata` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dump dei dati per la tabella `ct_xp_livello`
