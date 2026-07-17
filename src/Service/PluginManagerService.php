@@ -43,6 +43,12 @@ class PluginManagerService
                 ],
                 [
                     'method' => 'POST',
+                    'path' => '/docenti/plugin/corse/importa-auto-demo',
+                    'handler' => 'App\\Plugin\\Corse\\CorsePluginController@importDemoCars',
+                    'area' => 'teacher',
+                ],
+                [
+                    'method' => 'POST',
                     'path' => '/docenti/plugin/corse/auto/{carId}/elimina',
                     'handler' => 'App\\Plugin\\Corse\\CorsePluginController@deleteCar',
                     'area' => 'teacher',
@@ -123,6 +129,12 @@ class PluginManagerService
                     'method' => 'POST',
                     'path' => '/docenti/plugin/fight-the-monster/mostri',
                     'handler' => 'App\\Plugin\\FightTheMonster\\FightTheMonsterPluginController@saveMonster',
+                    'area' => 'teacher',
+                ],
+                [
+                    'method' => 'POST',
+                    'path' => '/docenti/plugin/fight-the-monster/importa-demo',
+                    'handler' => 'App\\Plugin\\FightTheMonster\\FightTheMonsterPluginController@importDemoAssets',
                     'area' => 'teacher',
                 ],
                 [
@@ -897,7 +909,9 @@ class PluginManagerService
         $statements = array_filter(array_map('trim', explode(';', $sql)));
         foreach ($statements as $statement) {
             $statement = preg_replace('/^\xEF\xBB\xBF/', '', $statement) ?? $statement;
-            if (!preg_match('/^CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?`?ct_plugin_[a-z0-9_]+`?\s*\(/i', $statement)) {
+            $isCreatePluginTable = preg_match('/^CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?`?ct_plugin_[a-z0-9_]+`?\s*\(/i', $statement) === 1;
+            $isInsertPluginTable = preg_match('/^INSERT\s+INTO\s+`?ct_plugin_[a-z0-9_]+`?\s*(?:\(|\s)/i', $statement) === 1;
+            if (!$isCreatePluginTable && !$isInsertPluginTable) {
                 throw new \RuntimeException($this->translator->translate('plugin.manage.error.only_create_table'));
             }
 
