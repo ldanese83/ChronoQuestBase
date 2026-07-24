@@ -1597,6 +1597,7 @@ class TeacherQuestService
 
         $zip = new ZipArchive();
         if ($zip->open($tmpName) !== true) {
+            $this->deleteDirectory($extractDir);
             return $this->error($this->translator->translate('teacher.quest.import.open_zip_failed'));
         }
         $zip->extractTo($extractDir);
@@ -1631,7 +1632,7 @@ class TeacherQuestService
             if (is_array($resolutionPayload)) {
                 return $resolutionPayload;
             }
-            return $this->error($this->translator->translate('teacher.quest.import.topic_resolution_required'));
+            return $this->error($exception->getMessage());
         } catch (Throwable $exception) {
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();
@@ -1876,6 +1877,25 @@ class TeacherQuestService
         );
         $stmt->execute(['fk_esercizio' => $exerciseId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
+
+    private function getExerciseExportMaterialBindings(int $exerciseId): array
+    {
+        $stmt = Database::getConnection()->prepare(
+            'SELECT em.fk_materiale, em.link, m.nome_materiale
+             FROM ct_esercizio_materiali em
+             LEFT JOIN ct_materiali m ON m.id_materiale = em.fk_materiale
+             WHERE em.fk_esercizio = :fk_esercizio'
+        );
+        $stmt->execute(['fk_esercizio' => $exerciseId]);
+
+        return array_map(static function (array $binding): array {
+            return [
+                'fk_materiale' => (int) ($binding['fk_materiale'] ?? 0),
+                'nome_materiale' => (string) ($binding['nome_materiale'] ?? ''),
+                'link' => (string) ($binding['link'] ?? ''),
+            ];
+        }, $stmt->fetchAll(PDO::FETCH_ASSOC) ?: []);
     }
 
     private function findSubjectIdByTopic(int $topicId): int
@@ -2645,21 +2665,27 @@ class TeacherQuestService
         $chapters = $chaptersStmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
         foreach ($chapters as &$chapter) {
             $exStmt = Database::getConnection()->prepare(
-                'SELECT e.*, eq.progressivo, a.uuid AS argomento_uuid, a.nome_argomento
+                'SELECT e.*, eq.progressivo, a.uuid AS argomento_uuid, a.nome_argomento, m.nome_materiale AS materiale_nome
                  FROM ct_esercizi e INNER JOIN ct_esercizi_quest eq ON eq.fk_esercizio = e.id_esercizio
                  LEFT JOIN ct_argomenti a ON a.id_argomento = e.fk_argomento
+                 LEFT JOIN ct_materiali m ON m.id_materiale = e.fk_materiale
                  WHERE eq.fk_capitolo = :fk_capitolo ORDER BY eq.progressivo ASC'
             );
             $exStmt->execute(['fk_capitolo' => (int) $chapter['id_capitolo']]);
             $chapterExercises = $exStmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
-            $chapter['exercises'] = array_map(static function (array $exercise): array {
+            $chapter['exercises'] = [];
+            foreach ($chapterExercises as $exercise) {
                 $exercise['argomento'] = [
                     'uuid' => (string) ($exercise['argomento_uuid'] ?? ''),
                     'nome' => (string) ($exercise['nome_argomento'] ?? ''),
                 ];
-                unset($exercise['argomento_uuid'], $exercise['nome_argomento'], $exercise['fk_argomento']);
-                return $exercise;
-            }, $chapterExercises);
+                $exercise['materiale'] = [
+                    'nome' => (string) ($exercise['materiale_nome'] ?? ''),
+                ];
+                $exercise['materiali_collegati'] = $this->getExerciseExportMaterialBindings((int) ($exercise['id_esercizio'] ?? 0));
+                unset($exercise['argomento_uuid'], $exercise['nome_argomento'], $exercise['fk_argomento'], $exercise['materiale_nome']);
+                $chapter['exercises'][] = $exercise;
+            }
         }
         unset($chapter);
 
@@ -2782,13 +2808,17 @@ class TeacherQuestService
                 'missing_topics' => array_values($missingTopics),
                 'available_topics' => $availableTopics,
                 'available_subjects' => $availableSubjects,
-            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE));
         }
 
         foreach ($chapters as $chapter) {
+            $chapterUuid = trim((string) ($chapter['uuid'] ?? ''));
+            if ($chapterUuid === '' || $this->recordUuidExists($pdo, 'ct_capitoli', $chapterUuid)) {
+                $chapterUuid = $this->generateUuidV4();
+            }
             $pdo->prepare('INSERT INTO ct_capitoli (uuid, nome_capitolo, coord_x, coord_y) VALUES (:uuid, :nome_capitolo, :coord_x, :coord_y)')
                 ->execute([
-                    'uuid' => (string) (($chapter['uuid'] ?? '') ?: $this->generateUuidV4()),
+                    'uuid' => $chapterUuid,
                     'nome_capitolo' => (string) ($chapter['nome_capitolo'] ?? ''),
                     'coord_x' => (int) ($chapter['coord_x'] ?? 0),
                     'coord_y' => (int) ($chapter['coord_y'] ?? 0),
@@ -2798,19 +2828,25 @@ class TeacherQuestService
                 ->execute(['fk_quest' => $newQuestId, 'fk_capitolo' => $newChapterId, 'progressivo' => (int) ($chapter['progressivo'] ?? 1)]);
 
             foreach ((array) ($chapter['exercises'] ?? []) as $exercise) {
+                $resolvedTopicId = (int) ($exercise['resolved_fk_argomento'] ?? 0);
+                $resolvedMaterialId = $this->resolveMaterialIdForImportedExercise($pdo, $exercise, $resolvedTopicId);
+                $exerciseUuid = trim((string) ($exercise['uuid'] ?? ''));
+                if ($exerciseUuid === '' || $this->recordUuidExists($pdo, 'ct_esercizi', $exerciseUuid)) {
+                    $exerciseUuid = $this->generateUuidV4();
+                }
                 $pdo->prepare('INSERT INTO ct_esercizi (uuid, testo_esercizio, testo_ese104, punti_esperienza, storia_esercizio, fk_argomento, tipo_esercizio, nome_capitolo, num_domande, monete_guadagnate, fk_materiale, livello_diff) VALUES (:uuid, :testo_esercizio, :testo_ese104, :punti_esperienza, :storia_esercizio, :fk_argomento, :tipo_esercizio, :nome_capitolo, :num_domande, :monete_guadagnate, :fk_materiale, :livello_diff)')
                     ->execute([
-                        'uuid' => (string) (($exercise['uuid'] ?? '') ?: $this->generateUuidV4()),
+                        'uuid' => $exerciseUuid,
                         'testo_esercizio' => $this->importHtmlAssetPaths((string) ($exercise['testo_esercizio'] ?? ''), $extractDir, $newQuestId, $newQuestUuid),
                         'testo_ese104' => $this->importHtmlAssetPaths((string) ($exercise['testo_ese104'] ?? ''), $extractDir, $newQuestId, $newQuestUuid),
                         'punti_esperienza' => (int) ($exercise['punti_esperienza'] ?? 0),
                         'storia_esercizio' => $this->importHtmlAssetPaths((string) ($exercise['storia_esercizio'] ?? ''), $extractDir, $newQuestId, $newQuestUuid),
-                        'fk_argomento' => (int) ($exercise['resolved_fk_argomento'] ?? 0),
+                        'fk_argomento' => $resolvedTopicId,
                         'tipo_esercizio' => (int) ($exercise['tipo_esercizio'] ?? 1),
                         'nome_capitolo' => (string) ($exercise['nome_capitolo'] ?? ''),
                         'num_domande' => (int) ($exercise['num_domande'] ?? 0),
                         'monete_guadagnate' => (int) ($exercise['monete_guadagnate'] ?? 0),
-                        'fk_materiale' => (int) ($exercise['fk_materiale'] ?? 0),
+                        'fk_materiale' => $resolvedMaterialId,
                         'livello_diff' => (int) ($exercise['livello_diff'] ?? 1),
                     ]);
                 $newExerciseId = (int) $pdo->lastInsertId();
@@ -2818,6 +2854,7 @@ class TeacherQuestService
                     ->execute(['fk_capitolo' => $newChapterId, 'fk_esercizio' => $newExerciseId, 'progressivo' => (int) ($exercise['progressivo'] ?? 1)]);
                 $pdo->prepare('INSERT INTO ct_classi_esercizi_attivi (fk_classe, fk_capitolo, fk_esercizio, attivo) VALUES (:fk_classe, :fk_capitolo, :fk_esercizio, 0)')
                     ->execute(['fk_classe' => $classId, 'fk_capitolo' => $newChapterId, 'fk_esercizio' => $newExerciseId]);
+                $this->importExerciseMaterialBindings($pdo, $newExerciseId, $exercise, $resolvedTopicId, $resolvedMaterialId);
             }
         }
         return $newQuestId;
@@ -2826,6 +2863,23 @@ class TeacherQuestService
     private function questUuidExists(PDO $pdo, string $uuid): bool
     {
         $stmt = $pdo->prepare('SELECT COUNT(*) FROM ct_quest WHERE uuid = :uuid');
+        $stmt->execute(['uuid' => $uuid]);
+
+        return (int) ($stmt->fetchColumn() ?: 0) > 0;
+    }
+
+    private function recordUuidExists(PDO $pdo, string $table, string $uuid): bool
+    {
+        $allowedTables = [
+            'ct_capitoli' => true,
+            'ct_esercizi' => true,
+            'ct_quest' => true,
+        ];
+        if ($uuid === '' || !isset($allowedTables[$table])) {
+            return false;
+        }
+
+        $stmt = $pdo->prepare('SELECT COUNT(*) FROM ' . $table . ' WHERE uuid = :uuid');
         $stmt->execute(['uuid' => $uuid]);
 
         return (int) ($stmt->fetchColumn() ?: 0) > 0;
@@ -2846,7 +2900,8 @@ class TeacherQuestService
         $topic = (array) ($exercise['argomento'] ?? []);
         $topicUuid = trim((string) ($topic['uuid'] ?? ''));
         $topicName = trim((string) ($topic['nome'] ?? ''));
-        $topicKey = $topicUuid !== '' ? ('uuid:' . $topicUuid) : ('name:' . mb_strtolower($topicName));
+        $normalizedTopicName = $this->normalizeImportLookupName($topicName);
+        $topicKey = $topicUuid !== '' ? ('uuid:' . $topicUuid) : ('name:' . $normalizedTopicName);
 
         if ($topicUuid !== '') {
             $stmt = $pdo->prepare('SELECT id_argomento FROM ct_argomenti WHERE uuid = :uuid LIMIT 1');
@@ -2858,9 +2913,7 @@ class TeacherQuestService
         }
 
         if ($topicName !== '') {
-            $stmt = $pdo->prepare('SELECT id_argomento FROM ct_argomenti WHERE nome_argomento = :nome_argomento LIMIT 1');
-            $stmt->execute(['nome_argomento' => $topicName]);
-            $found = (int) ($stmt->fetchColumn() ?: 0);
+            $found = $this->findTopicIdByImportedName($pdo, $topicName);
             if ($found > 0) {
                 return $found;
             }
@@ -2895,6 +2948,135 @@ class TeacherQuestService
         ];
 
         return 0;
+    }
+
+    private function findTopicIdByImportedName(PDO $pdo, string $topicName): int
+    {
+        $stmt = $pdo->prepare('SELECT id_argomento FROM ct_argomenti WHERE nome_argomento = :nome_argomento LIMIT 1');
+        $stmt->execute(['nome_argomento' => $topicName]);
+        $found = (int) ($stmt->fetchColumn() ?: 0);
+        if ($found > 0) {
+            return $found;
+        }
+
+        $target = $this->normalizeImportLookupName($topicName);
+        if ($target === '') {
+            return 0;
+        }
+
+        $rows = $pdo->query('SELECT id_argomento, nome_argomento FROM ct_argomenti')->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        foreach ($rows as $row) {
+            if ($this->normalizeImportLookupName((string) ($row['nome_argomento'] ?? '')) === $target) {
+                return (int) ($row['id_argomento'] ?? 0);
+            }
+        }
+
+        return 0;
+    }
+
+    private function normalizeImportLookupName(string $value): string
+    {
+        $decoded = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $normalized = preg_replace('/\s+/u', ' ', trim($decoded));
+        return mb_strtolower((string) $normalized, 'UTF-8');
+    }
+
+    private function resolveMaterialIdForImportedExercise(PDO $pdo, array $exercise, int $topicId): int
+    {
+        if ($topicId <= 0) {
+            return 0;
+        }
+
+        $material = (array) ($exercise['materiale'] ?? []);
+        $materialName = trim((string) ($material['nome'] ?? ''));
+        if ($materialName !== '') {
+            $found = $this->findMaterialIdByNameAndTopic($pdo, $materialName, $topicId);
+            return $found > 0 ? $found : 0;
+        }
+
+        $legacyMaterialId = (int) ($exercise['fk_materiale'] ?? 0);
+        if ($legacyMaterialId > 0) {
+            $stmt = $pdo->prepare(
+                'SELECT id_materiale
+                 FROM ct_materiali
+                 WHERE id_materiale = :id_materiale
+                   AND fk_argomento = :fk_argomento
+                 LIMIT 1'
+            );
+            $stmt->execute([
+                'id_materiale' => $legacyMaterialId,
+                'fk_argomento' => $topicId,
+            ]);
+            return (int) ($stmt->fetchColumn() ?: 0);
+        }
+
+        return 0;
+    }
+
+    private function importExerciseMaterialBindings(PDO $pdo, int $exerciseId, array $exercise, int $topicId, int $resolvedMaterialId): void
+    {
+        $bindings = is_array($exercise['materiali_collegati'] ?? null) ? $exercise['materiali_collegati'] : [];
+        if ($bindings === [] && $resolvedMaterialId > 0) {
+            $bindings[] = [
+                'fk_materiale' => $resolvedMaterialId,
+                'nome_materiale' => '',
+                'link' => '',
+            ];
+        }
+
+        if ($bindings === []) {
+            return;
+        }
+
+        $insert = $pdo->prepare(
+            'INSERT INTO ct_esercizio_materiali (fk_esercizio, fk_materiale, link)
+             VALUES (:fk_esercizio, :fk_materiale, :link)'
+        );
+
+        $seen = [];
+        foreach ($bindings as $binding) {
+            $materialId = 0;
+            $materialName = trim((string) ($binding['nome_materiale'] ?? ''));
+            if ($materialName !== '') {
+                $materialId = $this->findMaterialIdByNameAndTopic($pdo, $materialName, $topicId);
+            } elseif ((int) ($binding['fk_materiale'] ?? 0) === (int) ($exercise['fk_materiale'] ?? 0)) {
+                $materialId = $resolvedMaterialId;
+            }
+
+            $link = trim((string) ($binding['link'] ?? ''));
+            if ($materialId <= 0 && $link === '') {
+                continue;
+            }
+
+            $key = $materialId . '|' . $link;
+            if (isset($seen[$key])) {
+                continue;
+            }
+            $seen[$key] = true;
+
+            $insert->execute([
+                'fk_esercizio' => $exerciseId,
+                'fk_materiale' => $materialId > 0 ? $materialId : null,
+                'link' => $link !== '' ? $link : null,
+            ]);
+        }
+    }
+
+    private function findMaterialIdByNameAndTopic(PDO $pdo, string $materialName, int $topicId): int
+    {
+        $stmt = $pdo->prepare(
+            'SELECT id_materiale
+             FROM ct_materiali
+             WHERE fk_argomento = :fk_argomento
+               AND LOWER(TRIM(nome_materiale)) = LOWER(TRIM(:nome_materiale))
+             LIMIT 1'
+        );
+        $stmt->execute([
+            'fk_argomento' => $topicId,
+            'nome_materiale' => $materialName,
+        ]);
+
+        return (int) ($stmt->fetchColumn() ?: 0);
     }
 
     private function resolveAbsoluteAssetPath(string $path): ?string

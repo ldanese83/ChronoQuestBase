@@ -50,9 +50,40 @@ $translator = new TranslationService();
         </div>
     </div>
 
+    <div class="modal fade" id="questImportLoadingModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center py-4">
+                    <div class="spinner-border text-success mb-3" role="status" aria-hidden="true"></div>
+                    <h5 class="mb-2"><?= htmlspecialchars($translator->translate('teacher.quest.import.loading.title')) ?></h5>
+                    <p class="text-muted mb-0"><?= htmlspecialchars($translator->translate('teacher.quest.import.loading.message')) ?></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         
         const jsT = (key, fallback) => window.cqT ? window.cqT(key, fallback) : fallback;
+        const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        }[char]));
+        const showImportLoading = () => $('#questImportLoadingModal').modal({
+            backdrop: 'static',
+            keyboard: false,
+            show: true
+        });
+        const hideImportLoading = (afterHidden) => {
+            const modal = $('#questImportLoadingModal');
+            if (typeof afterHidden === 'function') {
+                modal.one('hidden.bs.modal', afterHidden);
+            }
+            modal.modal('hide');
+        };
 
         document.getElementById('exportQuestForm')?.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -69,15 +100,15 @@ $translator = new TranslationService();
 
             const buildDecisionMap = (payload) => {
                 const decisions = {};
-                (payload.missing_topics || []).forEach((topic) => {
-                    const key = topic.key;
-                    const modeElement = document.querySelector('[name="mode_' + key + '"]');
+                document.querySelectorAll('#topicResolutionModal .js-topic-resolution-row').forEach((row) => {
+                    const key = row.dataset.topicKey || '';
+                    const modeElement = row.querySelector('.js-topic-resolution-mode');
                     const mode = modeElement ? modeElement.value : 'existing';
                     if (mode === 'existing') {
-                        const topicSelect = document.querySelector('[name="existing_' + key + '"]');
+                        const topicSelect = row.querySelector('.js-existing-topic');
                         decisions[key] = { mode: 'existing', topic_id: parseInt(topicSelect?.value || '0', 10) || 0 };
                     } else {
-                        const subjectSelect = document.querySelector('[name="subject_' + key + '"]');
+                        const subjectSelect = row.querySelector('.js-new-topic-subject');
                         decisions[key] = { mode: 'create', subject_id: parseInt(subjectSelect?.value || '0', 10) || 0 };
                     }
                 });
@@ -85,20 +116,20 @@ $translator = new TranslationService();
             };
 
             const openResolutionModal = (payload, file) => {
+                document.getElementById('topicResolutionModal')?.remove();
                 let html = '<div class="modal fade" id="topicResolutionModal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-xl" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">' + jsT('teacher.quest.import.missing_topics.title', 'Risoluzione argomenti mancanti') + '</h5><button class="close" type="button" data-dismiss="modal"><span>&times;</span></button></div><div class="modal-body">';
                 (payload.missing_topics || []).forEach((topic) => {
-                    html += '<div class="border rounded p-2 mb-2">';
-                    html += '<strong>' + (topic.nome || jsT('teacher.quest.import.topic.label', 'Argomento')) + '</strong>';
-                    html += '<input type="hidden" name="topic_key" value="' + topic.key + '">';
-                    html += '<div class="row mt-2"><div class="col-md-4"><label>' + jsT('teacher.quest.import.action.label', 'Azione') + '</label><select class="form-control" name="mode_' + topic.key + '"><option value="existing">' + jsT('teacher.quest.import.action.associate_existing', 'Associa a esistente') + '</option><option value="create">' + jsT('teacher.quest.import.action.create_topic', 'Crea nuovo argomento') + '</option></select></div>';
-                    html += '<div class="col-md-4"><label>' + jsT('teacher.quest.import.existing_topic.label', 'Argomento esistente') + '</label><select class="form-control" name="existing_' + topic.key + '"><option value="0">' + jsT('teacher.quest.import.select_placeholder', 'Seleziona...') + '</option>';
+                    html += '<div class="border rounded p-2 mb-2 js-topic-resolution-row" data-topic-key="' + escapeHtml(topic.key) + '">';
+                    html += '<strong>' + escapeHtml(topic.nome || jsT('teacher.quest.import.topic.label', 'Argomento')) + '</strong>';
+                    html += '<div class="row mt-2"><div class="col-md-4"><label>' + jsT('teacher.quest.import.action.label', 'Azione') + '</label><select class="form-control js-topic-resolution-mode"><option value="existing">' + jsT('teacher.quest.import.action.associate_existing', 'Associa a esistente') + '</option><option value="create">' + jsT('teacher.quest.import.action.create_topic', 'Crea nuovo argomento') + '</option></select></div>';
+                    html += '<div class="col-md-4"><label>' + jsT('teacher.quest.import.existing_topic.label', 'Argomento esistente') + '</label><select class="form-control js-existing-topic"><option value="0">' + jsT('teacher.quest.import.select_placeholder', 'Seleziona...') + '</option>';
                     (payload.available_topics || []).forEach((existing) => {
-                        html += '<option value="' + existing.id_argomento + '">' + existing.nome_materia + ' / ' + existing.nome_argomento + '</option>';
+                        html += '<option value="' + parseInt(existing.id_argomento || '0', 10) + '">' + escapeHtml(existing.nome_materia) + ' / ' + escapeHtml(existing.nome_argomento) + '</option>';
                     });
                     html += '</select></div>';
-                    html += '<div class="col-md-4"><label>' + jsT('teacher.quest.import.new_topic_subject.label', 'Materia per nuovo argomento') + '</label><select class="form-control" name="subject_' + topic.key + '"><option value="0">' + jsT('teacher.quest.import.select_placeholder', 'Seleziona...') + '</option>';
+                    html += '<div class="col-md-4"><label>' + jsT('teacher.quest.import.new_topic_subject.label', 'Materia per nuovo argomento') + '</label><select class="form-control js-new-topic-subject"><option value="0">' + jsT('teacher.quest.import.select_placeholder', 'Seleziona...') + '</option>';
                     (payload.available_subjects || []).forEach((subject) => {
-                        html += '<option value="' + subject.id_materia + '">' + subject.nome_materia + '</option>';
+                        html += '<option value="' + parseInt(subject.id_materia || '0', 10) + '">' + escapeHtml(subject.nome_materia) + '</option>';
                     });
                     html += '</select></div></div></div>';
                 });
@@ -111,16 +142,27 @@ $translator = new TranslationService();
                     const retryData = new FormData();
                     retryData.append('quest_archive', file);
                     retryData.append('topic_resolution', JSON.stringify(decisionMap));
+                    $('#topicResolutionModal').modal('hide');
+                    showImportLoading();
                     fetch(form.action, { method: 'POST', body: retryData, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
                         .then((response) => response.json())
                         .then((result) => {
                             if (result.success) {
-                                window.location.reload();
+                                hideImportLoading(() => {
+                                    alert(result.message || jsT('teacher.quest.import.file.success', 'Quest importata correttamente.'));
+                                    window.location.reload();
+                                });
                                 return;
                             }
-                            alert(result.message || jsT('teacher.quest.import.failed', 'Import non riuscito.'));
+                            if (result.requires_topic_resolution) {
+                                hideImportLoading(() => openResolutionModal(result, file));
+                                return;
+                            }
+                            hideImportLoading(() => alert(result.message || jsT('teacher.quest.import.failed', 'Import non riuscito.')));
                         })
-                        .catch(() => alert(jsT('teacher.quest.import.error', 'Errore durante l\'import.')));
+                        .catch(() => {
+                            hideImportLoading(() => alert(jsT('teacher.quest.import.error', 'Errore durante l\'import.')));
+                        });
                 });
             };
 
@@ -132,20 +174,26 @@ $translator = new TranslationService();
                     return;
                 }
                 const formData = new FormData(form);
+                showImportLoading();
                 fetch(form.action, { method: 'POST', body: formData, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
                     .then((response) => response.json())
                     .then((payload) => {
                         if (payload.success) {
-                            window.location.reload();
+                            hideImportLoading(() => {
+                                alert(payload.message || jsT('teacher.quest.import.file.success', 'Quest importata correttamente.'));
+                                window.location.reload();
+                            });
                             return;
                         }
                         if (payload.requires_topic_resolution) {
-                            openResolutionModal(payload, file);
+                            hideImportLoading(() => openResolutionModal(payload, file));
                             return;
                         }
-                        alert(payload.message || jsT('teacher.quest.import.failed', 'Import non riuscito.'));
+                        hideImportLoading(() => alert(payload.message || jsT('teacher.quest.import.failed', 'Import non riuscito.')));
                     })
-                    .catch(() => alert(jsT('teacher.quest.import.error', 'Errore durante l\'import.')));
+                    .catch(() => {
+                        hideImportLoading(() => alert(jsT('teacher.quest.import.error', 'Errore durante l\'import.')));
+                    });
             });
         })();
     </script>

@@ -1002,6 +1002,7 @@ class PluginManagerService
             'public/css/plugin_' . $pluginCode . '/',
             'public/js/plugin_' . $pluginCode . '/',
             'public/assets/plugin_' . $pluginCode . '/',
+            'public/assets/images/plugin_' . $pluginCode . '/',
             'translations/it/plugin_' . $pluginCode . '.php',
             'translations/en/plugin_' . $pluginCode . '.php',
         ];
