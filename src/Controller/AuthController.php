@@ -178,7 +178,7 @@ class AuthController
         }
 
         // Inserisce utente docente e invia email con link validazione.
-        $authService->registerTeacher(
+        $registration = $authService->registerTeacher(
             $name,
             $surname,
             $username,
@@ -187,8 +187,18 @@ class AuthController
             $passwordConfirm
         );
 
-        // Mostra feedback positivo e torna al login.
-        Flash::add('success', 'register.success_teacher');
+        // Non dichiarare riuscito un invio SMTP che invece e' fallito.
+        if ($registration['success'] && $registration['message'] === 'register.success_teacher') {
+            Flash::add('success', 'register.success_teacher');
+        } elseif ($registration['success']) {
+            $mailError = trim((string) ($registration['mail_error'] ?? ''));
+            if ($mailError !== '') {
+                error_log('Teacher validation email failed for user ID ' . (int) ($registration['user_id'] ?? 0) . ': ' . $mailError);
+            }
+            Flash::add('danger', 'register.success_teacher_mail_failed');
+        } else {
+            Flash::add('danger', (string) $registration['message']);
+        }
         header('Location: /loginDoc');
         exit;
     }

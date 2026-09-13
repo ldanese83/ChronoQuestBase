@@ -7,6 +7,7 @@ use PDO;
 // Service che centralizza login, registrazione e validazione utenti.
 class AuthService
 {
+    private string $lastMailError = '';
     // Tenta login per docente/amministratore e salva utente in sessione.
     public function attemptDoc(string $username, string $password): bool
     {
@@ -287,6 +288,7 @@ class AuthService
             'username' => $username,
             'email' => $email,
             'codice_conf' => $codice,
+            'mail_error' => $mailSent ? '' : $this->lastMailError,
         ];
     }
 
@@ -317,9 +319,14 @@ class AuthService
         $oggetto = 'User Validation on ChronoQuest';
         $from = '';
 
-        // Delega invio reale al servizio email.
+        // Delega l'invio al servizio email e conserva l'eventuale errore SMTP.
         $mailService = new MailService();
-        return $mailService->sendMail($testo, $oggetto, $from, $email);
+        $sent = $mailService->sendMail($testo, $oggetto, $from, $email);
+        $this->lastMailError = $sent
+            ? ''
+            : ($mailService->getLastError() !== '' ? $mailService->getLastError() : 'Unknown mail error');
+
+        return $sent;
     }
 
     private function normalizeLanguage(string $language): string

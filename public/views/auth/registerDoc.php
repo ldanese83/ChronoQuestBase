@@ -103,7 +103,7 @@ unset($_SESSION['old']);
 
         <!-- Link di ritorno al login docenti. -->
         <div class="register-link">
-            <a href="/">Back to login</a>
+            <a href="/loginDoc">Back to login</a>
         </div>
     </div>
 </div>
