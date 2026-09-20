@@ -191,11 +191,11 @@ $imgForziere = $forziereBase !== '' ? ($immaginiForzieri[$forziereBase] ?? '') :
                                 ?>
                                 <div class="input-group mb-2 quiz-risposta <?= trim($answerStateClass . ' ' . $answerClickableClass) ?>" <?= !$isEvaluated ? 'onclick="seleziona_risp(' . (int) ($q['id_domanda'] ?? 0) . ',' . (int) ($answer['id_risposta'] ?? 0) . ')"' : '' ?> >
                                     <span class="input-group-text"><i id="icona_risp<?= (int) ($answer['id_risposta'] ?? 0) ?>" class="fas <?= $selected ? 'fa-check' : 'fa-angle-right' ?>"></i></span>
-                                    <input type="text" class="form-control" readonly value="<?= htmlspecialchars(html_entity_decode((string) ($answer['risposta'] ?? '')), ENT_QUOTES) ?>">
+                                    <input type="text" class="form-control" readonly value="<?= (html_entity_decode((string) ($answer['risposta'] ?? ''))) ?>">
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <textarea class="form-control" rows="6" name="testo_risposta<?= (int) ($q['id_domanda'] ?? 0) ?>" <?= $isEvaluated ? 'readonly' : '' ?>><?= htmlspecialchars(html_entity_decode((string) ($q['student_answer']['testo_risposta'] ?? ''))) ?></textarea>
+                            <textarea class="form-control" rows="6" name="testo_risposta<?= (int) ($q['id_domanda'] ?? 0) ?>" <?= $isEvaluated ? 'readonly' : '' ?>><?= (html_entity_decode((string) ($q['student_answer']['testo_risposta'] ?? ''))) ?></textarea>
                             <?php if ($isEvaluated): ?>
                                 <?php $commentoDocente = trim((string) ($q['student_answer']['commento_prof'] ?? '')); ?>
                                 <?php if ($commentoDocente !== ''): ?>
