@@ -10,13 +10,13 @@ $translator = new TranslationService();
     <?php if (!($errore ?? true)): ?>
         <div class="alert alert-success" role="alert">
             <p><strong><?= $translator->translate('validate.user.success.title') ?></strong> <?= $translator->translate('validate.user.success.message') ?></p>
-            <p><a href="/"><?= $translator->translate('validate.user.login_link') ?></a></p>
+            <p><a href="/loginDoc"><?= $translator->translate('validate.user.login_link') ?></a></p>
         </div>
     <?php else: ?>
         <!-- Branch errore: codice mancante o non corrispondente. -->
         <div class="alert alert-danger" role="alert">
             <p><strong><?= $translator->translate('validate.user.error.title') ?></strong> <?= $translator->translate('validate.user.error.message') ?></p>
-            <p><a href="/"><?= $translator->translate('validate.user.login_link') ?></a></p>
+            <p><a href="/loginDoc"><?= $translator->translate('validate.user.login_link') ?></a></p>
         </div>
     <?php endif; ?>
 </div>

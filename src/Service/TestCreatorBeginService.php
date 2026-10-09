@@ -1963,6 +1963,8 @@ class TestCreatorBeginService
                 'margin_right' => 12,
                 'margin_top' => 12,
                 'margin_bottom' => 12,
+                'setAutoTopMargin' => 'stretch',
+                'autoMarginPadding' => 2,
                 'default_font' => 'helvetica'
             ];
             if (($options['opendyslexic'] ?? false) === true) {
@@ -1976,13 +1978,17 @@ class TestCreatorBeginService
             }
             //echo $html;
             $mpdf = new \Mpdf\Mpdf($mpdfConfig);
+            // Load template styles before measuring the header's automatic top margin.
+            // Otherwise the floated name/class/date fields are measured as separate rows.
+            $mpdf->WriteHTML((string) ($printPayload['html'] ?? ''), \Mpdf\HTMLParserMode::HEADER_CSS);
             if (($printPayload['header'] ?? '') !== '') {
                 $mpdf->SetHTMLHeader((string) $printPayload['header']);
             }
+            $mpdf->WriteHTML((string) ($printPayload['html'] ?? ''));
+            // Earlier pages have already been closed; this footer applies to the last page.
             if (($printPayload['footer'] ?? '') !== '') {
                 $mpdf->SetHTMLFooter((string) $printPayload['footer']);
             }
-            $mpdf->WriteHTML((string) ($printPayload['html'] ?? ''));
             return ['success' => true, 'pdf' => $mpdf->Output('', 'S')];
         } catch (Throwable $exception) {
             return ['success' => false, 'message' => $this->tr('testcreator.service.pdf.generate_error_prefix') . $exception->getMessage()];
@@ -2516,7 +2522,7 @@ class TestCreatorBeginService
         }
 
         $stmt = Database::getConnection()->prepare(
-            'SELECT DISTINCT u.id_utente, u.nome, u.cognome, u.username,
+            'SELECT DISTINCT u.id_utente, u.nome, u.cognome, u.username, u.validato,
                     CASE WHEN admin.fk_utente IS NULL THEN 0 ELSE 1 END AS is_admin
              FROM ct_utenti u
              INNER JOIN ct_utenti_tipi doc ON doc.fk_utente = u.id_utente AND doc.fk_tipo_utente = :doc_role_id
@@ -2540,7 +2546,7 @@ class TestCreatorBeginService
         }
 
         $stmt = Database::getConnection()->prepare(
-            'SELECT u.id_utente,
+            'SELECT u.id_utente, u.validato,
                     CASE WHEN admin.fk_utente IS NULL THEN 0 ELSE 1 END AS is_admin
              FROM ct_utenti u
              INNER JOIN ct_utenti_tipi doc ON doc.fk_utente = u.id_utente AND doc.fk_tipo_utente = :doc_role_id
@@ -3194,7 +3200,7 @@ class TestCreatorBeginService
         }
         $placeholders = implode(',', array_fill(0, count($questionIds), '?'));
         $stmt = Database::getConnection()->prepare(
-            sprintf('SELECT id_domanda, domanda,num_righe, fk_tipo_domanda, ese_num FROM ct_domande WHERE id_domanda IN (%s)', $placeholders)
+            sprintf('SELECT id_domanda, domanda, num_righe, fk_tipo_domanda, ese_num, punti FROM ct_domande WHERE id_domanda IN (%s)', $placeholders)
         );
         $stmt->execute($questionIds);
         $questions = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
@@ -3320,8 +3326,14 @@ class TestCreatorBeginService
         $html .= '<div id="titolo_quiz">' . $this->tr('testcreator.service.pdf.assignment_of') . ' ' . $quizSubject . ' - ' . $quizName . '</div>';
         $html .= '<div id="domande">';
 
+        $showPoints = (int) ($quiz['mostra_punti_dom'] ?? 1) === 1;
         foreach ($questions as $index => $question) {
-            $html .= '<div class="titolo_domanda">' . $this->tr('testcreator.service.pdf.question_label') . ' ' . ($index + 1) . '</div>';
+            $html .= '<div class="titolo_domanda">' . $this->tr('testcreator.service.pdf.question_label') . ' ' . ($index + 1);
+            if ($showPoints) {
+                $points = (string) (float) ($question['punti'] ?? 0);
+                $html .= ' (' . $this->tr('testcreator.service.pdf.points_label') . ': ' . $points . ')';
+            }
+            $html .= '</div>';
             $html .= '<div class="domanda">' . html_entity_decode((string) ($question['domanda'] ?? ''), ENT_QUOTES) . '</div>';
             if ((int) ($question['fk_tipo_domanda'] ?? 0) === 4) {
                 $html .= '<div class="risp_multipla" style="text-align:justify;">' . html_entity_decode((string) ($question['rendered_ese_num'] ?? ''), ENT_QUOTES) . '</div>';
@@ -3354,6 +3366,12 @@ class TestCreatorBeginService
 
         if (trim($gridHtml) !== '') {
             $html .= '<div id="griglia">' . $gridHtml . '</div>';
+        }
+
+        if (trim($footer) !== '') {
+            // Reserve the extra 18 mm only at the end, rather than on every page.
+            // Together with the 12 mm bottom margin this keeps the final footer clear.
+            $html .= '<div style="clear:both; height:18mm; page-break-inside:avoid;">&nbsp;</div>';
         }
 
         $html .= '</body></html>';
@@ -3668,6 +3686,41 @@ class TestCreatorBeginService
         ]);
 
         return ['success' => true, 'message' => $this->tr('testcreator.service.teacher.admin_assigned')];
+    }
+
+    public function validateTeacher(int $userId): array
+    {
+        $adminCheck = $this->guardAdminAction();
+        if ($adminCheck !== null) {
+            return $adminCheck;
+        }
+
+        if ($userId <= 0) {
+            return ['success' => false, 'message' => $this->tr('testcreator.service.teacher.invalid')];
+        }
+
+        $teacher = $this->findTeacherById($userId);
+        if ($teacher === null) {
+            return ['success' => false, 'message' => $this->tr('testcreator.service.teacher.not_found')];
+        }
+
+        if (((int) ($teacher['validato'] ?? 0)) === 1) {
+            return ['success' => true, 'message' => $this->tr('testcreator.service.teacher.already_validated')];
+        }
+
+        $stmt = Database::getConnection()->prepare(
+            'UPDATE ct_utenti
+             SET validato = 1
+             WHERE id_utente = :id_utente
+               AND validato = 0'
+        );
+        $stmt->execute(['id_utente' => $userId]);
+
+        if ($stmt->rowCount() < 1) {
+            return ['success' => false, 'message' => $this->tr('testcreator.service.teacher.validation_failed')];
+        }
+
+        return ['success' => true, 'message' => $this->tr('testcreator.service.teacher.validated')];
     }
 
     public function removeAdministrator(int $userId): array

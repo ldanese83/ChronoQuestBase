@@ -50,6 +50,7 @@ $displayName = $userDisplayName !== '' ? $userDisplayName : $translator->transla
                             <?php
                             $teacherId = (int) ($teacher['id_utente'] ?? 0);
                             $isAdminTeacher = ((int) ($teacher['is_admin'] ?? 0)) === 1;
+                            $isValidatedTeacher = ((int) ($teacher['validato'] ?? 0)) === 1;
                             ?>
                             <tr>
                                 <td><?= htmlspecialchars((string) ($teacher['nome'] ?? '')) ?></td>
@@ -63,6 +64,13 @@ $displayName = $userDisplayName !== '' ? $userDisplayName : $translator->transla
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center text-md-start">
+                                    <?php if (!$isValidatedTeacher): ?>
+                                        <form method="POST" action="/testcreator/amministratori/<?= $teacherId ?>/valida" class="d-inline js-validate-teacher-form">
+                                            <button type="submit" class="btn btn-success btn-sm" data-user="<?= htmlspecialchars((string) ($teacher['username'] ?? ''), ENT_QUOTES) ?>">
+                                                <?= $translator->translate('testcreator.administrators.validate') ?>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
                                     <?php if (!$isAdminTeacher): ?>
                                         <form method="POST" action="/testcreator/amministratori/<?= $teacherId ?>/promuovi" class="d-inline js-promote-admin-form">
                                             <button type="submit" class="btn btn-primary btn-sm" data-user="<?= htmlspecialchars((string) ($teacher['username'] ?? ''), ENT_QUOTES) ?>">

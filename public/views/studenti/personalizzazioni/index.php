@@ -111,7 +111,7 @@ $useEnglishDbTranslations = ($_SESSION['lang'] ?? 'en') === 'en';
                                         ? $translatedAbilityText
                                         : (string) ($ability['testo_abilita'] ?? '');
                                     ?>
-                                    <li><?= htmlspecialchars($displayAbilityText) ?> +<?= (int) ($ability['aumento'] ?? 0) ?><?= in_array((string) ($ability['tipologia'] ?? ''), ['probabilita_forziere_epico', 'probabilita_forziere_leggendario'], true) ? '%' : '' ?></li>
+                                    <li><?= ($displayAbilityText) ?> +<?= (int) ($ability['aumento'] ?? 0) ?><?= in_array((string) ($ability['tipologia'] ?? ''), ['probabilita_forziere_epico', 'probabilita_forziere_leggendario'], true) ? '%' : '' ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>

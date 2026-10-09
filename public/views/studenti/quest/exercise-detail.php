@@ -8,10 +8,33 @@ $translator = new TranslationService();
 $quest = $quest ?? null;
 $chapter = $chapter ?? null;
 $exercise = $exercise ?? null;
+$exerciseText = (string) ($exercise['testo_esercizio'] ?? '');
+$exerciseText104 = (string) ($exercise['testo_ese104'] ?? '');
+if ((int) ($student['l104'] ?? 0) === 1 && trim($exerciseText104) !== '') {
+    $exerciseText = $exerciseText104;
+}
 $exerciseState = $exerciseState ?? 'new';
 $delivery = $delivery ?? null;
 $materialiSupporto = $materialiSupporto ?? [];
 $quizQuestions = $quizQuestions ?? [];
+// Protect backtick-delimited code before decoding the surrounding rich text.
+// MathJax skips <code>, so PHP variables are not interpreted as math delimiters.
+$renderQuizQuestion = static function (string $text): string {
+    $parts = preg_split('/(```[\s\S]*?```|`[^`]+`)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+    $html = '';
+    foreach ($parts ?: [] as $index => $part) {
+        if ($index % 2 === 0) {
+            $html .= html_entity_decode($part, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            continue;
+        }
+        $isBlock = substr($part, 0, 3) === '```';
+        $delimiterLength = $isBlock ? 3 : 1;
+        $code = substr($part, $delimiterLength, -$delimiterLength);
+        $code = htmlspecialchars(html_entity_decode($code, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $html .= $isBlock ? '<pre><code>' . $code . '</code></pre>' : '<code>' . $code . '</code>';
+    }
+    return $html;
+};
 $isEvaluated = $exerciseState === 'evaluated';
 $submitUrl = '/studenti/quest/' . (int) ($quest['id_quest'] ?? 0) . '/capitoli/' . (int) ($chapter['id_capitolo'] ?? 0) . '/esercizi/' . (int) ($exercise['id_esercizio'] ?? 0) . '/consegna';
 $deleteFileUrl = '/studenti/quest/' . (int) ($quest['id_quest'] ?? 0) . '/capitoli/' . (int) ($chapter['id_capitolo'] ?? 0) . '/esercizi/' . (int) ($exercise['id_esercizio'] ?? 0) . '/consegna/elimina-file';
@@ -110,13 +133,13 @@ $imgForziere = $forziereBase !== '' ? ($immaginiForzieri[$forziereBase] ?? '') :
             </div>
 
             <?php if ((string) ($exercise['tipo'] ?? '') === 'Domanda aperta'): ?>
-                <div class="quest-box warning mb-4"><i class="fas fa-scroll"></i> <?= html_entity_decode((string) ($exercise['testo_esercizio'] ?? '')) ?></div>
+                <div class="quest-box warning mb-4"><i class="fas fa-scroll"></i> <?= html_entity_decode($exerciseText) ?></div>
                 <div class="mb-4">
                     <label class="quest-label"><i class="fas fa-feather-alt"></i> <?= $translator->translate('student.quest.exercise.your_answer') ?></label>
                     <textarea name="testo_risposta" id="testo_risposta" rows="10" class="form-control" <?= $isEvaluated ? 'readonly' : '' ?>><?= htmlspecialchars(html_entity_decode((string) ($delivery['testo_risposta'] ?? ''))) ?></textarea>
                 </div>
             <?php elseif ((string) ($exercise['tipo'] ?? '') === 'Esercizio da consegnare'): ?>
-                <div class="quest-box primary mb-4"><div class="quest-box-title"><i class="fas fa-scroll"></i><strong><?= $translator->translate('student.quest.exercise.exercise_text') ?></strong></div><div class="quest-box-content"><?= html_entity_decode((string) ($exercise['testo_esercizio'] ?? '')) ?></div></div>
+                <div class="quest-box primary mb-4"><div class="quest-box-title"><i class="fas fa-scroll"></i><strong><?= $translator->translate('student.quest.exercise.exercise_text') ?></strong></div><div class="quest-box-content"><?= html_entity_decode($exerciseText) ?></div></div>
                 <?php if (!empty($delivery['file_consegnato'])): ?>
                     <div class="quest-box info mb-4"><strong><?= $translator->translate('student.quest.exercise.delivered_files') ?></strong><br>
                         <?php $fileDir = dirname(__DIR__, 4) . '/public' . (string) $delivery['file_consegnato']; ?>
@@ -172,7 +195,7 @@ $imgForziere = $forziereBase !== '' ? ($immaginiForzieri[$forziereBase] ?? '') :
                 <input type="hidden" id="num_crocette" value="<?= count(array_filter($quizQuestions, static fn ($q) => (int) ($q['fk_tipo_domanda'] ?? 0) === 2)) ?>">
                 <?php foreach ($quizQuestions as $q): ?>
                     <div class="quiz-domanda mb-4">
-                        <div class="alert alert-warning quiz-testo"><?= html_entity_decode((string) ($q['domanda'] ?? '')) ?></div>
+                        <div class="alert alert-warning quiz-testo"><?= (int) ($q['fk_tipo_domanda'] ?? 0) === 2 ? $renderQuizQuestion((string) ($q['domanda'] ?? '')) : html_entity_decode((string) ($q['domanda'] ?? '')) ?></div>
                         <?php if ((int) ($q['fk_tipo_domanda'] ?? 0) === 2): ?>
                             <input type="hidden" id="rispdom_<?= (int) ($q['id_domanda'] ?? 0) ?>" name="rispdom_<?= (int) ($q['id_domanda'] ?? 0) ?>" value="<?= (int) ($q['student_answer']['fk_risposta'] ?? 0) ?>">
                             <?php foreach (($q['answers'] ?? []) as $answer): ?>
@@ -191,7 +214,7 @@ $imgForziere = $forziereBase !== '' ? ($immaginiForzieri[$forziereBase] ?? '') :
                                 ?>
                                 <div class="input-group mb-2 quiz-risposta <?= trim($answerStateClass . ' ' . $answerClickableClass) ?>" <?= !$isEvaluated ? 'onclick="seleziona_risp(' . (int) ($q['id_domanda'] ?? 0) . ',' . (int) ($answer['id_risposta'] ?? 0) . ')"' : '' ?> >
                                     <span class="input-group-text"><i id="icona_risp<?= (int) ($answer['id_risposta'] ?? 0) ?>" class="fas <?= $selected ? 'fa-check' : 'fa-angle-right' ?>"></i></span>
-                                    <input type="text" class="form-control" readonly value="<?= (html_entity_decode((string) ($answer['risposta'] ?? ''))) ?>">
+                                    <input type="text" class="form-control" readonly value="<?= htmlspecialchars(html_entity_decode((string) ($answer['risposta'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -215,6 +238,13 @@ $imgForziere = $forziereBase !== '' ? ($immaginiForzieri[$forziereBase] ?? '') :
                     <button id="salva_risp" class="btn <?= $exerciseState === 'new' ? 'btn-success' : 'btn-warning' ?> btn-icon-split btn-lg"><span style="font-size:1.5rem;margin-top:2%"><i class="fas fa-save"></i></span> <span class="text"><?= (string) ($exercise['tipo'] ?? '') === 'Esercizio da consegnare' && $exerciseState === 'submitted' ? $translator->translate('student.quest.exercise.save_new_delivery') : $translator->translate('student.quest.exercise.save_answer') ?></span></button>
                 </div>
             <?php else: ?>
+                <?php $commentoConsegna = trim((string) ($delivery['commento_prof'] ?? '')); ?>
+                <?php if ($commentoConsegna !== ''): ?>
+                    <div class="quest-box info mb-4">
+                        <div class="quest-box-title"><i class="fas fa-comment-dots"></i> <?= $translator->translate('student.quest.exercise.teacher_comment') ?></div>
+                        <div class="quest-box-content"><?= html_entity_decode($commentoConsegna, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></div>
+                    </div>
+                <?php endif; ?>
                 <div class="quest-box voto <?= ((int) ($delivery['valutazione'] ?? 0) < 5) ? 'negativo' : (((int) ($delivery['valutazione'] ?? 0) <= 6) ? 'medio' : 'positivo') ?>">
                     <i class="fas fa-award"></i>
                     <div class="voto-numero"><?= (int) ($delivery['valutazione'] ?? 0) ?></div>

@@ -197,7 +197,6 @@ $savePath = $isEditMode
                 <?php endif; ?>
                 <?php if ($isEditMode): ?>
                     <input type="hidden" name="argomento" value="<?= $selectedTopicId ?>">
-                    <input type="hidden" name="tipo_esercizio" value="<?= (int) ($exercise['tipo_esercizio'] ?? 0) ?>">
                 <?php endif; ?>
 
                 <div class="row_form <?= $isReadOnly ? 'd-none' : '' ?>" style="margin-top:3vh">

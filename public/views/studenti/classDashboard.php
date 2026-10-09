@@ -34,7 +34,7 @@ $teammates = $teammates ?? [];
             <?php foreach ($availableCharacters as $character): ?>
                 <div class="col-xl-6 col-md-6 mb-4">
                     <div class="choose-character-card">
-                        <form method="post" action="/studenti/classe/personaggio" class="m-0">
+                        <form method="post" action="/studenti/classe/personaggio" class="m-0" onsubmit="return confirm(<?= htmlspecialchars(json_encode(sprintf($translator->translate('student.class_dashboard.character.confirm_selection'), (string) $character['nome_personaggio']), JSON_UNESCAPED_UNICODE | JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES) ?>);">
                             <input type="hidden" name="character_id" value="<?= (int) $character['id_personaggio'] ?>">
                             <button type="submit" class="choose-character-select w-100 border-0 p-0 text-start bg-transparent">
                                 <div class="choose-character-header">

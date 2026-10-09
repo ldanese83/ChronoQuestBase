@@ -968,6 +968,14 @@ class TestCreatorBeginController
         exit;
     }
 
+    public function validateTeacher(string $userId): void
+    {
+        $result = (new TestCreatorBeginService())->validateTeacher((int) $userId);
+        Flash::add(($result['success'] ?? false) ? 'success' : 'danger', (string) ($result['message'] ?? 'Operazione completata.'));
+        header('Location: /testcreator/amministratori');
+        exit;
+    }
+
     public function removeAdministrator(string $userId): void
     {
         $result = (new TestCreatorBeginService())->removeAdministrator((int) $userId);

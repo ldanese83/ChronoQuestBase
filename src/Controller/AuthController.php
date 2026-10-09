@@ -17,7 +17,7 @@ class AuthController
             'title' => 'login.docente',
             'pageStyles' => [
                 '/css/login.css',
-                'https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap',
+                'https://fonts.googleapis.com/css2?family=Nunito&display=swap',
             ],
             'useMathJax' => false,
         ], 'loginDocLayout');
@@ -30,6 +30,7 @@ class AuthController
             'title' => 'register',
             'pageStyles' => [
                 '/css/register.css',
+				'https://fonts.googleapis.com/css2?family=Nunito&display=swap',
             ],
             'useMathJax' => false,
             'pageScripts' => ['/js/register.js'],

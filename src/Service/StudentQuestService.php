@@ -612,7 +612,7 @@ class StudentQuestService
     private function findStudentDelivery(int $exerciseId, int $studentId): ?array
     {
         $stmt = Database::getConnection()->prepare(
-            'SELECT cs.*, er.testo_risposta
+            'SELECT cs.*, er.testo_risposta, er.commento_prof
              FROM ct_consegne_studenti cs
              LEFT JOIN ct_esercizio_risposte er
                ON er.fk_consegna = cs.id_consegna
@@ -857,8 +857,8 @@ class StudentQuestService
         $stmt->execute(['fk_studente' => $studentId, 'fk_esercizio' => $exerciseId, 'fk_consegna' => $deliveryId]);
         $exists = $stmt->fetchColumn();
         if ($exists) {
-            Database::getConnection()->prepare('UPDATE ct_esercizio_risposte SET testo_risposta = :testo_risposta, data_risposta = :data_risposta WHERE fk_risposta = :id_risposta')
-                ->execute(['testo_risposta' => $this->sanitizeRichText($text), 'data_risposta' => date('Y-m-d'), 'id_risposta' => (int) $exists]);
+            Database::getConnection()->prepare('UPDATE ct_esercizio_risposte SET testo_risposta = :testo_risposta, data_risposta = :data_risposta WHERE id_ese_risp = :id_ese_risp')
+                ->execute(['testo_risposta' => $this->sanitizeRichText($text), 'data_risposta' => date('Y-m-d'), 'id_ese_risp' => (int) $exists]);
             return;
         }
         Database::getConnection()->prepare('INSERT INTO ct_esercizio_risposte (fk_studente, fk_esercizio, fk_consegna, testo_risposta, data_risposta) VALUES (:fk_studente, :fk_esercizio, :fk_consegna, :testo_risposta, :data_risposta)')
